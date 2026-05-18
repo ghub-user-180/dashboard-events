@@ -1,16 +1,5 @@
 [
   {
-    "id": "tanzevents-salsa-mittelstufe-m-f-montags-monday-lunes-2026-05-18",
-    "title": "Salsa Mittelstufe  ( M-F ) (Montags Monday Lunes)",
-    "startDate": "2026-05-18",
-    "startTime": "19:30",
-    "location": "8003 Zürich Zürich",
-    "city": "Zürich",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-mittelstufe---m-f--montags-monday-lunes/6760/",
-    "source": "scraper"
-  },
-  {
     "id": "tanzevents-salsa-partnerwork-2026-05-18",
     "title": "SALSA Partnerwork",
     "startDate": "2026-05-18",
@@ -583,6 +572,17 @@
     "source": "scraper"
   },
   {
+    "id": "tanzevents-salsa-fortgeschritten-2026-06-17",
+    "title": "Salsa Fortgeschritten",
+    "startDate": "2026-06-17",
+    "startTime": "19:30",
+    "location": "Tösstalstrasse 160, 8400 Winterthur",
+    "city": "8400 Winterthur",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-fortgeschritten/6590/",
+    "source": "scraper"
+  },
+  {
     "id": "muevete-mu-vete-salsabar-am-montag-2026-05-18",
     "title": "muévete SalsaBar am Montag",
     "startDate": "2026-05-18",
@@ -742,9 +742,9 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
-    "title": "Saturday Ecstatic (ATEMA)",
-    "startDate": "2026-06-13",
+    "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-06",
+    "title": "Saturday Ecstatic (ANGELA ALASKA)",
+    "startDate": "2026-06-06",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -766,9 +766,9 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-06",
-    "title": "Saturday Ecstatic (ANGELA ALASKA)",
-    "startDate": "2026-06-06",
+    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
+    "title": "Saturday Ecstatic (PADMA SAM)",
+    "startDate": "2026-05-30",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -790,9 +790,9 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
-    "title": "Saturday Ecstatic (PADMA SAM)",
-    "startDate": "2026-05-30",
+    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
+    "title": "Saturday Ecstatic (ATEMA)",
+    "startDate": "2026-06-13",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -924,6 +924,16 @@
     "source": "scraper"
   },
   {
+    "id": "danceapp-bachata-b-rkliplatz-2026-05-18",
+    "title": "Bachata Bürkliplatz",
+    "startDate": "2026-05-18",
+    "location": "Zürich",
+    "city": "Zürich",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8362",
+    "source": "scraper"
+  },
+  {
     "id": "danceapp-diva-dance-classes-by-eva-wednesdays-2026-05-20",
     "title": "Diva Dance Classes by Eva (Wednesdays)",
     "startDate": "2026-05-20",
@@ -998,6 +1008,16 @@
     "source": "scraper"
   },
   {
+    "id": "danceapp-bachata-b-rkliplatz-2026-05-25",
+    "title": "Bachata Bürkliplatz",
+    "startDate": "2026-05-25",
+    "location": "Zürich",
+    "city": "Zürich",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8363",
+    "source": "scraper"
+  },
+  {
     "id": "danceapp-diva-dance-classes-by-eva-wednesdays-2026-05-27",
     "title": "Diva Dance Classes by Eva (Wednesdays)",
     "startDate": "2026-05-27",
@@ -1057,6 +1077,16 @@
     "city": "St. Gallen",
     "category": "tanz-buehne",
     "url": "https://danceapp.ch/event.php?id=8344",
+    "source": "scraper"
+  },
+  {
+    "id": "danceapp-bachata-b-rkliplatz-2026-06-01",
+    "title": "Bachata Bürkliplatz",
+    "startDate": "2026-06-01",
+    "location": "Zürich",
+    "city": "Zürich",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8364",
     "source": "scraper"
   },
   {
@@ -1240,19 +1270,6 @@
     "city": "Köniz",
     "category": "tanz-buehne",
     "url": "https://www.kulturhof.ch/veranstaltung/50-jahre-musikschule-koeniz/",
-    "source": "scraper"
-  },
-  {
-    "id": "schuur-cemetery-skyline-2026-05-17",
-    "title": "Cemetery Skyline",
-    "startDate": "2026-05-17",
-    "endDate": "2026-05-18",
-    "startTime": "18:30",
-    "endTime": "00:30",
-    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
-    "city": "Luzern",
-    "category": "ausgehen",
-    "url": "https://www.schuur.ch/programm/events/event-details/cemetery-skyline-17-05-2026-konzerthaus-schuur-luzern",
     "source": "scraper"
   },
   {
