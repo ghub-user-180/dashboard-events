@@ -1,49 +1,5 @@
 [
   {
-    "id": "tanzevents-salsa-mittelstufe-2026-05-19",
-    "title": "Salsa Mittelstufe",
-    "startDate": "2026-05-19",
-    "startTime": "19:30",
-    "location": "Tösstalstrasse 160, 8400 Winterthur",
-    "city": "8400 Winterthur",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-mittelstufe/6531/",
-    "source": "scraper"
-  },
-  {
-    "id": "tanzevents-salsa-anf-nger-2026-05-19",
-    "title": "Salsa Anfänger",
-    "startDate": "2026-05-19",
-    "startTime": "20:45",
-    "location": "Tösstalstrasse 160, 8400 Winterthur",
-    "city": "8400 Winterthur",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-anfanger/6550/",
-    "source": "scraper"
-  },
-  {
-    "id": "tanzevents-t-glich-salsa-bachata-und-kizombakurse-2026-05-20",
-    "title": "Täglich Salsa-, Bachata- und Kizombakurse",
-    "startDate": "2026-05-20",
-    "startTime": "19:00",
-    "location": "5610 Wohlen AG Wohlen AG",
-    "city": "Wohlen AG",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/taglich-salsa--bachata--und-kizombakurse/6866/",
-    "source": "scraper"
-  },
-  {
-    "id": "tanzevents-salsaare-2026-05-20",
-    "title": "Salsaare",
-    "startDate": "2026-05-20",
-    "startTime": "20:00",
-    "location": "2026 Virtuality Sagl Virtuality Sagl",
-    "city": "Virtuality Sagl",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsaare/6852/",
-    "source": "scraper"
-  },
-  {
     "id": "tanzevents-salsa-anf-nger-2026-05-20",
     "title": "Salsa Anfänger",
     "startDate": "2026-05-20",
@@ -561,6 +517,50 @@
     "source": "scraper"
   },
   {
+    "id": "tanzevents-salsa-bachata-sunntigs-workshop-2026-06-21",
+    "title": "Salsa / Bachata Sunntigs-Workshop",
+    "startDate": "2026-06-21",
+    "startTime": "16:15",
+    "location": "Tanzzentrum Tonwerk Schaffhausen",
+    "city": "Schaffhausen",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa--bachata-sunntigs-workshop/8335/",
+    "source": "scraper"
+  },
+  {
+    "id": "tanzevents-salsa-partnerwork-2026-06-22",
+    "title": "SALSA Partnerwork",
+    "startDate": "2026-06-22",
+    "startTime": "18:20",
+    "location": "Dance Spot Zurich Zürich Opfikon",
+    "city": "Zürich Opfikon",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-partnerwork/8187/",
+    "source": "scraper"
+  },
+  {
+    "id": "tanzevents-salsa-anf-nger-2026-06-22",
+    "title": "Salsa Anfänger",
+    "startDate": "2026-06-22",
+    "startTime": "19:30",
+    "location": "Tösstalstrasse 160, 8400 Winterthur",
+    "city": "8400 Winterthur",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-anfanger/6498/",
+    "source": "scraper"
+  },
+  {
+    "id": "tanzevents-salsa-fortgeschritten-2026-06-22",
+    "title": "Salsa Fortgeschritten",
+    "startDate": "2026-06-22",
+    "startTime": "19:30",
+    "location": "Tösstalstrasse 160, 8400 Winterthur",
+    "city": "8400 Winterthur",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-fortgeschritten/6517/",
+    "source": "scraper"
+  },
+  {
     "id": "muevete-tarde-cubana-2026-05-24",
     "title": "Tarde Cubana",
     "startDate": "2026-05-24",
@@ -708,33 +708,9 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
-    "title": "Saturday Ecstatic (PADMA SAM)",
-    "startDate": "2026-05-30",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
     "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-20",
     "title": "Saturday Ecstatic (ANGELA ALASKA)",
     "startDate": "2026-06-20",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "ecstaticdance-saturday-ecstatic-romeo-2026-05-23",
-    "title": "Saturday Ecstatic (ROMEO)",
-    "startDate": "2026-05-23",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -756,9 +732,21 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
-    "title": "Saturday Ecstatic (ATEMA)",
-    "startDate": "2026-06-13",
+    "id": "ecstaticdance-saturday-ecstatic-romeo-2026-05-23",
+    "title": "Saturday Ecstatic (ROMEO)",
+    "startDate": "2026-05-23",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
+    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
+    "title": "Saturday Ecstatic (PADMA SAM)",
+    "startDate": "2026-05-30",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -771,6 +759,18 @@
     "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-06",
     "title": "Saturday Ecstatic (ANGELA ALASKA)",
     "startDate": "2026-06-06",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
+    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
+    "title": "Saturday Ecstatic (ATEMA)",
+    "startDate": "2026-06-13",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -1093,6 +1093,36 @@
     "city": "Zürich",
     "category": "tanz-buehne",
     "url": "https://danceapp.ch/event.php?id=8365",
+    "source": "scraper"
+  },
+  {
+    "id": "danceapp-bachata-fortgeschritten-2026-06-11",
+    "title": "Bachata Fortgeschritten",
+    "startDate": "2026-06-11",
+    "location": "Wil",
+    "city": "Wil",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8145",
+    "source": "scraper"
+  },
+  {
+    "id": "danceapp-milonga-freitag-2026-06-12",
+    "title": "Milonga Freitag",
+    "startDate": "2026-06-12",
+    "location": "St.Gallen",
+    "city": "St.Gallen",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8047",
+    "source": "scraper"
+  },
+  {
+    "id": "danceapp-latin-fit-dance-by-natalia-naty-2026-06-13",
+    "title": "Latin Fit Dance by Natalia (Naty)",
+    "startDate": "2026-06-13",
+    "location": "Cham",
+    "city": "Cham",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=7239",
     "source": "scraper"
   },
   {
@@ -1419,8 +1449,8 @@
     "source": "scraper"
   },
   {
-    "id": "schuur-vom-b-rg-zor-see-2026-06-07",
-    "title": "Vom Bärg zor See",
+    "id": "schuur-vom-b-rg-zor-see-ausverkauft-2026-06-07",
+    "title": "Vom Bärg zor See - AUSVERKAUFT",
     "startDate": "2026-06-07",
     "endDate": "2026-06-08",
     "startTime": "19:00",
