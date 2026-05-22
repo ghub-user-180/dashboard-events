@@ -1,27 +1,5 @@
 [
   {
-    "id": "tanzevents-baila-salsa-bachata-2026-05-21",
-    "title": "BAILA SALSA & BACHATA",
-    "startDate": "2026-05-21",
-    "startTime": "20:00",
-    "location": "baila salsa & bachata aarbergergasse 61, 3011 bern salsa bachata",
-    "city": "Schweiz",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/baila-salsa-bachata/6406/",
-    "source": "scraper"
-  },
-  {
-    "id": "tanzevents-fridaynight-bananenreiferei-2026-05-22",
-    "title": "FridayNight @ Bananenreiferei",
-    "startDate": "2026-05-22",
-    "startTime": "21:00",
-    "location": "8005 Zürich Zürich",
-    "city": "Zürich",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/fridaynight--bananenreiferei/6697/",
-    "source": "scraper"
-  },
-  {
     "id": "tanzevents-freitags-in-z-rich-kubanische-tanzkurse-mit-mijail-galano-son-rumba-t",
     "title": "Freitags in Zürich Kubanische Tanzkurse mit Mijail Galano ( Son - Rumba - Timba - Casino)",
     "startDate": "2026-05-22",
@@ -561,6 +539,28 @@
     "source": "scraper"
   },
   {
+    "id": "tanzevents-salsa-anf-nger-2026-06-24",
+    "title": "Salsa Anfänger",
+    "startDate": "2026-06-24",
+    "startTime": "19:30",
+    "location": "Tösstalstrasse 160, 8400 Winterthur",
+    "city": "8400 Winterthur",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-anfanger/6573/",
+    "source": "scraper"
+  },
+  {
+    "id": "tanzevents-salsa-fortgeschritten-2026-06-24",
+    "title": "Salsa Fortgeschritten",
+    "startDate": "2026-06-24",
+    "startTime": "19:30",
+    "location": "Tösstalstrasse 160, 8400 Winterthur",
+    "city": "8400 Winterthur",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/salsa-fortgeschritten/6591/",
+    "source": "scraper"
+  },
+  {
     "id": "muevete-tarde-cubana-2026-05-24",
     "title": "Tarde Cubana",
     "startDate": "2026-05-24",
@@ -708,6 +708,18 @@
     "source": "scraper"
   },
   {
+    "id": "ecstaticdance-saturday-ecstatic-jonny-driscoll-zouk-2026-06-27",
+    "title": "Saturday Ecstatic (Jonny Driscoll Zouk)",
+    "startDate": "2026-06-27",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
     "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
     "title": "Saturday Ecstatic (PADMA SAM)",
     "startDate": "2026-05-30",
@@ -720,9 +732,21 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-jonny-driscoll-zouk-2026-06-27",
-    "title": "Saturday Ecstatic (Jonny Driscoll Zouk)",
-    "startDate": "2026-06-27",
+    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
+    "title": "Saturday Ecstatic (ATEMA)",
+    "startDate": "2026-06-13",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
+    "id": "ecstaticdance-saturday-ecstatic-romeo-2026-05-23",
+    "title": "Saturday Ecstatic (ROMEO)",
+    "startDate": "2026-05-23",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -753,41 +777,6 @@
     "city": "Bern",
     "category": "tanz-buehne",
     "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "ecstaticdance-saturday-ecstatic-romeo-2026-05-23",
-    "title": "Saturday Ecstatic (ROMEO)",
-    "startDate": "2026-05-23",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
-    "title": "Saturday Ecstatic (ATEMA)",
-    "startDate": "2026-06-13",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "planlos-2026-05-21-20-00",
-    "title": "Planlos Impro Theater",
-    "startDate": "2026-05-21",
-    "startTime": "20:00",
-    "location": "ONO, Kramgasse 6, 3011 Bern",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.onobern.ch",
     "source": "scraper"
   },
   {
@@ -876,16 +865,6 @@
     "city": "Bern",
     "category": "tanz-buehne",
     "url": "https://www.onobern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "danceapp-baila-salsa-bachata-2026-05-21",
-    "title": "BAILA SALSA & BACHATA",
-    "startDate": "2026-05-21",
-    "location": "Aarbergergasse 61, 3011 Bern",
-    "city": "Aarbergergasse 61, 3011 Bern",
-    "category": "tanz-buehne",
-    "url": "https://danceapp.ch/event.php?id=6406",
     "source": "scraper"
   },
   {
@@ -1126,17 +1105,6 @@
     "source": "scraper"
   },
   {
-    "id": "kulturhof-patti-basler-philippe-kuhn-2026-05-21",
-    "title": "Patti Basler & Philippe Kuhn",
-    "startDate": "2026-05-21",
-    "startTime": "20:00",
-    "location": "Kulturhof Köniz",
-    "city": "Köniz",
-    "category": "tanz-buehne",
-    "url": "https://www.kulturhof.ch/veranstaltung/patti-basler-philippe-kuhn-i-l%c2%a8cke-derniere/",
-    "source": "scraper"
-  },
-  {
     "id": "kulturhof-helga-disko-2026-05-22",
     "title": "Helga! Disko",
     "startDate": "2026-05-22",
@@ -1255,19 +1223,6 @@
     "city": "Köniz",
     "category": "tanz-buehne",
     "url": "https://www.kulturhof.ch/veranstaltung/50-jahre-musikschule-koeniz/",
-    "source": "scraper"
-  },
-  {
-    "id": "schuur-noche-cubana-2026-05-21",
-    "title": "Noche Cubana",
-    "startDate": "2026-05-21",
-    "endDate": "2026-05-22",
-    "startTime": "21:00",
-    "endTime": "02:30",
-    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
-    "city": "Luzern",
-    "category": "ausgehen",
-    "url": "https://www.schuur.ch/programm/events/event-details/noche-cubana-21-05-2026-konzerthaus-schuur-luzern",
     "source": "scraper"
   },
   {
@@ -2215,6 +2170,19 @@
     "source": "scraper"
   },
   {
+    "id": "schuur-is-ja-irre-die-die-rzte-party-2026-09-04",
+    "title": "Is ja irre – Die «Die Ärzte»-Party",
+    "startDate": "2026-09-04",
+    "endDate": "2026-09-05",
+    "startTime": "22:00",
+    "endTime": "04:00",
+    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
+    "city": "Luzern",
+    "category": "ausgehen",
+    "url": "https://www.schuur.ch/programm/events/event-details/is-ja-irre-die-die-aerzte-party-04-09-2026-konzerthaus-schuur-luzern",
+    "source": "scraper"
+  },
+  {
     "id": "schuur-fate-gear-2026-09-10",
     "title": "Fate Gear",
     "startDate": "2026-09-10",
@@ -2522,6 +2490,18 @@
     "city": "Luzern",
     "category": "ausgehen",
     "url": "https://www.schuur.ch/programm/events/event-details/lo-leduc-21-11-2026-konzerthaus-schuur-luzern",
+    "source": "scraper"
+  },
+  {
+    "id": "schuur-kleinstadtgefl-ster-2026-11-21",
+    "title": "Kleinstadtgeflüster",
+    "startDate": "2026-11-21",
+    "startTime": "22:00",
+    "endTime": "04:00",
+    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
+    "city": "Luzern",
+    "category": "ausgehen",
+    "url": "https://www.schuur.ch/programm/events/event-details/kleinstadtgefluester-21-11-2026-konzerthaus-schuur-luzern",
     "source": "scraper"
   },
   {
