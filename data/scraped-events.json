@@ -1,16 +1,5 @@
 [
   {
-    "id": "tanzevents-freitags-in-z-rich-kubanische-tanzkurse-mit-mijail-galano-son-rumba-t",
-    "title": "Freitags in Zürich Kubanische Tanzkurse mit Mijail Galano ( Son - Rumba - Timba - Casino)",
-    "startDate": "2026-05-22",
-    "startTime": "18:00",
-    "location": "8001 Zürich Zürich",
-    "city": "Zürich",
-    "category": "tanz-buehne",
-    "url": "https://www.tanzevents.ch/-events/de/events/salsa/freitags-in-zurich-kubanische-tanzkurse-mit-mijail-galano--son---rumba---timba---casino/8088/",
-    "source": "scraper"
-  },
-  {
     "id": "tanzevents-domingo-latino-2026-05-24",
     "title": "Domingo Latino",
     "startDate": "2026-05-24",
@@ -151,6 +140,17 @@
     "city": "Zürich",
     "category": "tanz-buehne",
     "url": "https://www.tanzevents.ch/-events/de/events/salsa/fridaynight--bananenreiferei/6698/",
+    "source": "scraper"
+  },
+  {
+    "id": "tanzevents-freitags-in-z-rich-kubanische-tanzkurse-mit-mijail-galano-son-rumba-t",
+    "title": "Freitags in Zürich Kubanische Tanzkurse mit Mijail Galano ( Son - Rumba - Timba - Casino)",
+    "startDate": "2026-05-29",
+    "startTime": "18:00",
+    "location": "8001 Zürich Zürich",
+    "city": "Zürich",
+    "category": "tanz-buehne",
+    "url": "https://www.tanzevents.ch/-events/de/events/salsa/freitags-in-zurich-kubanische-tanzkurse-mit-mijail-galano--son---rumba---timba---casino/8089/",
     "source": "scraper"
   },
   {
@@ -708,33 +708,21 @@
     "source": "scraper"
   },
   {
+    "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-06",
+    "title": "Saturday Ecstatic (ANGELA ALASKA)",
+    "startDate": "2026-06-06",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
     "id": "ecstaticdance-saturday-ecstatic-jonny-driscoll-zouk-2026-06-27",
     "title": "Saturday Ecstatic (Jonny Driscoll Zouk)",
     "startDate": "2026-06-27",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
-    "title": "Saturday Ecstatic (PADMA SAM)",
-    "startDate": "2026-05-30",
-    "startTime": "18:00",
-    "endTime": "20:00",
-    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
-    "city": "Bern",
-    "category": "tanz-buehne",
-    "url": "https://www.ecstaticdancebern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
-    "title": "Saturday Ecstatic (ATEMA)",
-    "startDate": "2026-06-13",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -768,9 +756,21 @@
     "source": "scraper"
   },
   {
-    "id": "ecstaticdance-saturday-ecstatic-angela-alaska-2026-06-06",
-    "title": "Saturday Ecstatic (ANGELA ALASKA)",
-    "startDate": "2026-06-06",
+    "id": "ecstaticdance-saturday-ecstatic-padma-sam-2026-05-30",
+    "title": "Saturday Ecstatic (PADMA SAM)",
+    "startDate": "2026-05-30",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
+    "city": "Bern",
+    "category": "tanz-buehne",
+    "url": "https://www.ecstaticdancebern.ch",
+    "source": "scraper"
+  },
+  {
+    "id": "ecstaticdance-saturday-ecstatic-atema-2026-06-13",
+    "title": "Saturday Ecstatic (ATEMA)",
+    "startDate": "2026-06-13",
     "startTime": "18:00",
     "endTime": "20:00",
     "location": "Dance Complex, Vidmarhallen 3, Liebefeld",
@@ -865,16 +865,6 @@
     "city": "Bern",
     "category": "tanz-buehne",
     "url": "https://www.onobern.ch",
-    "source": "scraper"
-  },
-  {
-    "id": "danceapp-milonga-freitag-2026-05-22",
-    "title": "Milonga Freitag",
-    "startDate": "2026-05-22",
-    "location": "St.Gallen",
-    "city": "St.Gallen",
-    "category": "tanz-buehne",
-    "url": "https://danceapp.ch/event.php?id=8044",
     "source": "scraper"
   },
   {
@@ -1094,6 +1084,16 @@
     "source": "scraper"
   },
   {
+    "id": "danceapp-bachata-b-rkliplatz-2026-06-15",
+    "title": "Bachata Bürkliplatz",
+    "startDate": "2026-06-15",
+    "location": "Zürich",
+    "city": "Zürich",
+    "category": "tanz-buehne",
+    "url": "https://danceapp.ch/event.php?id=8366",
+    "source": "scraper"
+  },
+  {
     "id": "roseway-roseway-am-60-geburtstag-der-vfk-2026-05-30",
     "title": "Roseway am 60. Geburtstag der VFK",
     "startDate": "2026-05-30",
@@ -1102,17 +1102,6 @@
     "city": "Kloten",
     "category": "tanz-buehne",
     "url": "https://roseway.ch#ytp-event-21116",
-    "source": "scraper"
-  },
-  {
-    "id": "kulturhof-helga-disko-2026-05-22",
-    "title": "Helga! Disko",
-    "startDate": "2026-05-22",
-    "startTime": "21:00",
-    "location": "Kulturhof Köniz",
-    "city": "Köniz",
-    "category": "tanz-buehne",
-    "url": "https://www.kulturhof.ch/veranstaltung/helga-disko-4/",
     "source": "scraper"
   },
   {
@@ -1223,31 +1212,6 @@
     "city": "Köniz",
     "category": "tanz-buehne",
     "url": "https://www.kulturhof.ch/veranstaltung/50-jahre-musikschule-koeniz/",
-    "source": "scraper"
-  },
-  {
-    "id": "schuur-folk-metal-night-w-excelsis-pertness-2026-05-22",
-    "title": "Folk Metal Night w/ Excelsis & Pertness",
-    "startDate": "2026-05-22",
-    "endDate": "2026-05-23",
-    "startTime": "19:30",
-    "endTime": "04:00",
-    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
-    "city": "Luzern",
-    "category": "ausgehen",
-    "url": "https://www.schuur.ch/programm/events/event-details/folk-metal-night-w-excelsis-pertness-22-05-2026-konzerthaus-schuur-luzern",
-    "source": "scraper"
-  },
-  {
-    "id": "schuur-video-screen-party-2026-05-22",
-    "title": "Video Screen Party",
-    "startDate": "2026-05-22",
-    "startTime": "22:00",
-    "endTime": "04:00",
-    "location": "Konzerthaus Schüür, Tribschenstrasse 1, Luzern",
-    "city": "Luzern",
-    "category": "ausgehen",
-    "url": "https://www.schuur.ch/programm/events/event-details/video-screen-party-konzerthaus-schuur-luzern",
     "source": "scraper"
   },
   {
@@ -3088,46 +3052,6 @@
     "category": "retreats",
     "description": "Non-tantra festival about sexuality, relationships & body awareness.",
     "url": "https://www.sensualityfestival.com",
-    "source": "scraper"
-  },
-  {
-    "id": "bitvocation-bitcoin-ireland-2026-05-22",
-    "title": "Bitcoin Ireland",
-    "startDate": "2026-05-22",
-    "location": "Dublin, Ireland",
-    "city": "Dublin",
-    "category": "festivals-konferenzen",
-    "url": "https://bitvocation.com/to/bitcoin-ireland",
-    "source": "scraper"
-  },
-  {
-    "id": "bitvocation-bitcoin-is-for-everyone-2026-05-22",
-    "title": "Bitcoin is for Everyone",
-    "startDate": "2026-05-22",
-    "location": "Portland, OR, U.S.",
-    "city": "Portland, OR",
-    "category": "festivals-konferenzen",
-    "url": "https://bitvocation.com/to/bitcoin-is-for-everyone",
-    "source": "scraper"
-  },
-  {
-    "id": "bitvocation-pizza-day-2026-05-22",
-    "title": "Pizza Day",
-    "startDate": "2026-05-22",
-    "location": "Prague, Czech Republic",
-    "city": "Prague",
-    "category": "festivals-konferenzen",
-    "url": "https://bitvocation.com/to/pizza-day",
-    "source": "scraper"
-  },
-  {
-    "id": "bitvocation-the-pizza-day-thing-2026-05-22",
-    "title": "The Pizza Day Thing",
-    "startDate": "2026-05-22",
-    "location": "Bury St Edmonds, UK",
-    "city": "Bury St Edmonds",
-    "category": "festivals-konferenzen",
-    "url": "https://bitvocation.com/to/pizza-day-26",
     "source": "scraper"
   },
   {
