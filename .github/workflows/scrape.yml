@@ -2,7 +2,7 @@ name: Scrape Events
 
 on:
   schedule:
-    - cron: '0 5 * * *'   # täglich 05:00 UTC = 06:00/07:00 Schweizer Zeit
+    - cron: '0 5 */3 * *'   # alle 3 Tage, 05:00 UTC = 06:00/07:00 Schweizer Zeit
   workflow_dispatch:        # manuell auslösbar via GitHub UI
 
 jobs:

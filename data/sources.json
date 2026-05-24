@@ -70,6 +70,16 @@
     "notes": "Aktiver Scraper (scrapeSchuur)"
   },
   {
+    "id": "gangus",
+    "name": "Gangus Luzern",
+    "url": "https://gangus.ch/",
+    "bookmarkCategory": "Ausgehen-Luzern",
+    "dashboardCategory": "ausgehen",
+    "type": "scraper",
+    "status": "pending",
+    "notes": "2026-05-24: Aufgenommen als potenzielle Luzern-Quelle. Next.js SPA — Event-Daten kommen client-side, statisches HTML liefert nichts. Braucht Headless-Browser (Phase 5c) oder API-Endpoint via Browser-DevTools identifizieren."
+  },
+  {
     "id": "bar59",
     "name": "Bar59 Luzern",
     "url": "https://bar59.ch/",
@@ -113,7 +123,7 @@
     "bookmarkCategory": "Ausgehen-Schweiz",
     "dashboardCategory": "ausgehen",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Kulturzentrum Genf — Struktur prüfen"
   },
   {
@@ -201,7 +211,7 @@
     "bookmarkCategory": "Austausch-Volunteering",
     "dashboardCategory": "austausch",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Saisonale Bergbauern-Einsätze"
   },
   {
@@ -238,7 +248,7 @@
     "bookmarkCategory": "Austausch-Volunteering",
     "dashboardCategory": "austausch",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "mladiinfo",
@@ -320,8 +330,8 @@
     "bookmarkCategory": "Austausch-Volunteering",
     "dashboardCategory": "retreats",
     "type": "scraper",
-    "status": "pending",
-    "notes": "Seminar- und Retreat-Programm"
+    "status": "active",
+    "notes": "2026-05-24: Aktiver Scraper (scrapeZegg) — parsed schema.org-Microdata aus SeminarDesk-Plugin (.sd-event mit itemprop=startDate/addressLocality/addressCountry)."
   },
   {
     "id": "hackergarten",
@@ -404,7 +414,7 @@
     "bookmarkCategory": "Berg/Schnee CH",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Kletterkurse und Events"
   },
   {
@@ -441,7 +451,7 @@
     "bookmarkCategory": "Berg/Schnee CH",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "SAC Sektion Rossberg — Tourenkalender prüfen"
   },
   {
@@ -451,8 +461,8 @@
     "bookmarkCategory": "Berg/Schnee CH",
     "dashboardCategory": "sport",
     "type": "manual",
-    "status": "active",
-    "notes": "Manueller Event: SAC Tourenprogramm 2026"
+    "status": "no-event-relevance",
+    "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; echter Scraper sinnvoll statt Pseudo-Event über das ganze Tourenprogramm."
   },
   {
     "id": "skidefond",
@@ -706,7 +716,7 @@
     "bookmarkCategory": "Dating",
     "dashboardCategory": "sozialleben",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Hat Workshops und Events"
   },
   {
@@ -772,7 +782,7 @@
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "retreats",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "lebenshauch",
@@ -848,7 +858,7 @@
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "austausch",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "mucura",
@@ -876,8 +886,8 @@
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "scraper",
-    "status": "active",
-    "notes": "Aktiver Scraper — jährliches Event, Datum aus Seitentext"
+    "status": "pending",
+    "notes": "2026-05-24: Scraper entfernt — Webseite liefert nur Datum, keinen konkreten Stadtnamen. Manuell eintragen sobald der Veranstaltungsort der jeweiligen Ausgabe bekannt ist."
   },
   {
     "id": "naturallifestyles",
@@ -889,14 +899,14 @@
     "status": "no-event-relevance"
   },
   {
-    "id": "vbg-net",
+    "id": "vbg",
     "name": "VBG – Agenda Ferien & Kurse",
     "url": "https://www.vbg.net/agenda",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "scraper",
     "status": "active",
-    "notes": "Aktiver Scraper (scrapeVBG)"
+    "notes": "Aktiver Scraper (scrapeVBG) 2026-05-24: ID von vbg-net auf vbg vereinheitlicht (matches Code)."
   },
   {
     "id": "vrairepaire",
@@ -914,8 +924,9 @@
     "url": "https://campfi.org/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "retreats",
-    "type": "manual",
-    "status": "active"
+    "type": "scraper",
+    "status": "active",
+    "notes": "2026-05-24: Aktiver Scraper (scrapeCampFI) — nutzt Tribe Events REST-API /wp-json/tribe/events/v1/events. Liefert venue.city + venue.country pro Event."
   },
   {
     "id": "fifreedom",
@@ -924,7 +935,8 @@
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "retreats",
     "type": "manual",
-    "status": "active"
+    "status": "pending",
+    "notes": "2026-05-24: Squarespace ohne Event-Daten im statischen HTML — Trip-Daten kommen client-side. Manuell eintragen sobald konkrete Ausgabe (Stadt + Datum) bekannt."
   },
   {
     "id": "econome",
@@ -933,7 +945,8 @@
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "no-event-relevance",
+    "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; jährlich März, Stadt wechselt innerhalb USA. Manuell eintragen sobald Stadt 2027 bekannt."
   },
   {
     "id": "ousuca",
@@ -951,7 +964,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "no-event-relevance",
+    "notes": "2026-05-24: Aus manual-events.json entfernt — Plan B Forum Lugano ist in bitvocation-Scraper enthalten."
   },
   {
     "id": "cryptoevents-global",
@@ -970,7 +984,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "no-event-relevance",
+    "notes": "2026-05-24: Aus manual-events.json entfernt — BitBlockBoom ist in bitvocation-Scraper enthalten."
   },
   {
     "id": "baltichoneybadger",
@@ -979,7 +994,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "bitvocation",
@@ -998,7 +1014,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "pending",
+    "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; jährlich, Ort wechselt. Manuell eintragen sobald Stadt/Datum konkret."
   },
   {
     "id": "pointzeroforum",
@@ -1007,7 +1024,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "hcpp",
@@ -1026,7 +1044,8 @@
     "bookmarkCategory": "Konferenzen",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "liberty-intl",
@@ -1255,7 +1274,7 @@
     "bookmarkCategory": "Nomadthings",
     "dashboardCategory": "retreats",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Grosse Plattform — API oder Headless prüfen"
   },
   {
@@ -1349,7 +1368,8 @@
     "bookmarkCategory": "Nomadthings",
     "dashboardCategory": "festivals-konferenzen",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "mindvalley",
@@ -1358,7 +1378,7 @@
     "bookmarkCategory": "Nomadthings",
     "dashboardCategory": "retreats",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Zu prüfen: Events vorhanden, Struktur unklar"
   },
   {
@@ -1395,7 +1415,7 @@
     "bookmarkCategory": "Reiten",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "swra",
@@ -1404,7 +1424,7 @@
     "bookmarkCategory": "Reiten",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Turniere und Kurse"
   },
   {
@@ -1441,7 +1461,8 @@
     "bookmarkCategory": "Sommer-Schools",
     "dashboardCategory": "austausch",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "summerschoolsineurope",
@@ -1450,7 +1471,7 @@
     "bookmarkCategory": "Sommer-Schools",
     "dashboardCategory": "austausch",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "FacetWP AJAX — benötigt Nonce/Session, kein statischer Inhalt"
   },
   {
@@ -1479,9 +1500,9 @@
     "url": "https://barhopping.ch/",
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
-    "type": "manual",
+    "type": "scraper",
     "status": "active",
-    "notes": "Auch in: Dating"
+    "notes": "2026-05-24: Aktiver Scraper (scrapeBarhopping) — schema.org-Microdata pro Event mit verschiedenen Altersgruppen."
   },
   {
     "id": "timeleft",
@@ -1490,8 +1511,8 @@
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
     "type": "manual",
-    "status": "active",
-    "notes": "Auch in: Dating. Wöchentlich mittwochs."
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "gadwas",
@@ -1509,7 +1530,8 @@
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
     "type": "scraper",
-    "status": "pending"
+    "status": "pending",
+    "notes": "2026-05-24: WordPress mit client-side Event-Plugin (Elementor Astra) — kein REST-Endpoint, /calendar leer im statischen HTML. Phase 5c (Headless) oder Network-Tab inspizieren."
   },
   {
     "id": "rcbe",
@@ -1518,7 +1540,7 @@
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "toastmasters-bern",
@@ -1527,7 +1549,7 @@
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "rhetorikclubs",
@@ -1536,7 +1558,7 @@
     "bookmarkCategory": "Sozialleben",
     "dashboardCategory": "sozialleben",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "caribedance",
@@ -1545,7 +1567,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "contactimprovisation",
@@ -1554,7 +1576,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "cubailaviena",
@@ -1652,17 +1674,17 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
-    "id": "latinpromotion-kalender",
+    "id": "latinpromotion",
     "name": "Latin Promotion – Salsa-Kalender",
     "url": "https://latinpromotion.ch/salsa-kalender/",
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
     "status": "active",
-    "notes": "Aktiver Scraper (scrapeLatinPromotion)"
+    "notes": "Aktiver Scraper (scrapeLatinPromotion) 2026-05-24: ID von latinpromotion-kalender auf latinpromotion vereinheitlicht (matches Code)."
   },
   {
     "id": "leapinlindy",
@@ -1738,7 +1760,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "api",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Notion Public DB — Notion API nutzbar"
   },
   {
@@ -1748,7 +1770,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Worldwide Swing Events — API prüfen"
   },
   {
@@ -1757,9 +1779,9 @@
     "url": "https://tanzevents.ch/-tanzen/de/events/",
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
-    "type": "scraper",
-    "status": "active",
-    "notes": "Aktiver Scraper (scrapeTanzevents) — selber Scraper wie tanzevents.ch/events.php"
+    "type": "none",
+    "status": "pending",
+    "notes": "2026-05-24: Geisterquelle — diese URL (/tanzen/de/events/) hat keinen Scraper-Code. Aktueller tanzevents-Scraper deckt nur /events.php?read_group=12 ab. Falls die zweite URL Mehrwert bringt, eigenen Scraper bauen."
   },
   {
     "id": "danceplacegrapevine",
@@ -1777,7 +1799,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "leondanceart",
@@ -1786,7 +1808,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "tango-zurich",
@@ -1795,7 +1817,7 @@
     "bookmarkCategory": "Tanz",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "salsarica",
@@ -1853,7 +1875,7 @@
     "bookmarkCategory": "Theater",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Impro-Kurse Schweiz — Struktur prüfen"
   },
   {
@@ -1931,7 +1953,7 @@
     "bookmarkCategory": "Theater",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Schweizer Theater — Struktur prüfen"
   },
   {
@@ -1941,7 +1963,7 @@
     "bookmarkCategory": "Theater",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Theater anundpfirsich auf Yourstage — prüfen"
   },
   {
@@ -1961,7 +1983,7 @@
     "bookmarkCategory": "Theater",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "eppstein",
@@ -1970,7 +1992,7 @@
     "bookmarkCategory": "Theater",
     "dashboardCategory": "tanz-buehne",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "bike-adventure-tours",
@@ -1979,7 +2001,7 @@
     "bookmarkCategory": "Velo",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "cycletouringfestival",
@@ -2034,7 +2056,7 @@
     "bookmarkCategory": "Velo",
     "dashboardCategory": "sport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "aarebootsvermietung",
@@ -2099,7 +2121,7 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Wing & Foil Kurse — Struktur prüfen"
   },
   {
@@ -2297,7 +2319,7 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "scraper",
-    "status": "pending",
+    "status": "no-event-relevance",
     "notes": "Wing Foil Kurse Urnersee — Struktur prüfen"
   },
   {
@@ -2307,7 +2329,7 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "bhs-sisikon",
@@ -2316,7 +2338,7 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "webcam-brunnen",
@@ -2353,7 +2375,7 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "scraper",
-    "status": "pending"
+    "status": "no-event-relevance"
   },
   {
     "id": "foilingschool-sisikon",
@@ -2362,7 +2384,8 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "foilingcamps",
@@ -2371,7 +2394,8 @@
     "bookmarkCategory": "Wassersport",
     "dashboardCategory": "wassersport",
     "type": "manual",
-    "status": "active"
+    "status": "pending",
+    "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; Aggregator mit vielen Camps weltweit. Echter Scraper sinnvoll statt Pseudo-Event."
   },
   {
     "id": "planetwingfoil",
@@ -2419,7 +2443,8 @@
     "bookmarkCategory": "Sonstiges",
     "dashboardCategory": "tanz-buehne",
     "type": "manual",
-    "status": "active"
+    "status": "draft",
+    "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
   },
   {
     "id": "cielospatagonicos",

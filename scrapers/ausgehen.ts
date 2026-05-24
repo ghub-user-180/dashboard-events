@@ -1,31 +1,20 @@
 import * as cheerio from 'cheerio'
-import type { Event } from '../lib/types'
-
-const CATEGORY = 'ausgehen'
-const HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-}
-
-function stableId(prefix: string, title: string, date: string): string {
-  const raw = `${prefix}-${title}-${date}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-  return raw.slice(0, 80)
-}
+import type { Scraper, RawEvent } from '../lib/scraper'
+import { HEADERS, stableId } from '../lib/scraper-utils'
 
 // ── 1. Konzerthaus Schüür Luzern ────────────────────────────────────────────
 
-export async function scrapeSchuur(): Promise<Event[]> {
+async function scrapeSchuur(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.schuur.ch/programm', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     $('.viz-event-list-box').each((_, el) => {
       const $el = $(el)
 
-      // ISO dates from schema.org meta tags
       const startRaw = $el.find('meta[itemprop="startDate"]').attr('content') ?? ''
       const endRaw = $el.find('meta[itemprop="endDate"]').attr('content') ?? ''
       if (!startRaw) return
@@ -51,7 +40,6 @@ export async function scrapeSchuur(): Promise<Event[]> {
         endTime,
         location: 'Konzerthaus Schüür, Tribschenstrasse 1, Luzern',
         city: 'Luzern',
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -66,13 +54,13 @@ export async function scrapeSchuur(): Promise<Event[]> {
 
 // ── 2. Jazzkantine Luzern ───────────────────────────────────────────────────
 
-export async function scrapeJazzkantine(): Promise<Event[]> {
+async function scrapeJazzkantine(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.jazzkantine.com/veranstaltungen', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     $('.eventlist-event--upcoming').each((_, el) => {
       const $el = $(el)
@@ -99,7 +87,6 @@ export async function scrapeJazzkantine(): Promise<Event[]> {
         endTime,
         location: 'Jazzkantine, Grabenstrasse 8, Luzern',
         city: 'Luzern',
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -110,4 +97,20 @@ export async function scrapeJazzkantine(): Promise<Event[]> {
     console.error('jazzkantine.com error:', e)
     return []
   }
+}
+
+export const schuurScraper: Scraper = {
+  id: 'schuur',
+  name: 'Konzerthaus Schüür',
+  category: 'ausgehen',
+  country: 'CH',
+  run: scrapeSchuur,
+}
+
+export const jazzkantineScraper: Scraper = {
+  id: 'jazzkantine',
+  name: 'Jazzkantine Luzern',
+  category: 'ausgehen',
+  country: 'CH',
+  run: scrapeJazzkantine,
 }

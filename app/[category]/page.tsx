@@ -1,27 +1,49 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getEventsByCategory, formatDateRange, generateICS } from '@/lib/events'
+import {
+  getEventsByCategory,
+  formatDateRange,
+  generateICS,
+  parseFilter,
+  applyFilter,
+  geoFacets,
+} from '@/lib/events'
 import { getCategoryById, CATEGORIES } from '@/lib/categories'
+import { Filter } from '@/components/Filter'
 import type { Event } from '@/lib/types'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c.id }))
 }
 
-export default async function CategoryPage({ params }: { params: { category: string } }) {
-  const cat = getCategoryById(params.category)
+interface PageProps {
+  params: { category: string }
+  searchParams: { [k: string]: string | string[] | undefined }
+}
+
+export default async function CategoryPage({ params, searchParams }: PageProps) {
+  const cat = getCategoryById(params.category as never)
   if (!cat) notFound()
 
   const events = await getEventsByCategory(params.category)
+  const filter = parseFilter(searchParams)
+  const facets = geoFacets(events)
+  const filtered = applyFilter(events, filter)
 
-  // Get unique cities for filter hint
-  const cities = [...new Set(events.map((e) => e.city).filter(Boolean))] as string[]
+  // Back-Link den Filter mitnehmen, damit Dashboard die Auswahl wiederzeigt
+  const qs = new URLSearchParams()
+  if (filter.continents.length) qs.set('continent', filter.continents.join(','))
+  if (filter.countries.length) qs.set('country', filter.countries.join(','))
+  if (filter.cities.length) qs.set('city', filter.cities.join(','))
+  if (filter.range !== 'all') qs.set('range', filter.range)
+  if (filter.duration !== 'all') qs.set('duration', filter.duration)
+  const backHref = qs.toString() ? `/?${qs.toString()}` : '/'
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <Link href="/" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-6">
+      <Link href={backHref} className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-6">
         ← Zurück zum Dashboard
       </Link>
 
@@ -33,25 +55,22 @@ export default async function CategoryPage({ params }: { params: { category: str
         </div>
       </header>
 
-      {cities.length > 1 && (
-        <div className="flex gap-2 flex-wrap mb-5 text-xs">
-          <span className="text-gray-400">Orte:</span>
-          {cities.map((city) => (
-            <span key={city} className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-              {city}
-            </span>
-          ))}
-        </div>
-      )}
+      <Filter facets={facets} />
 
-      {events.length === 0 ? (
+      {filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
-          <p className="text-lg">Keine bevorstehenden Events</p>
-          <p className="text-sm mt-1">Events manuell in <code>data/manual-events.json</code> eintragen</p>
+          <p className="text-lg">
+            {events.length === 0 ? 'Keine bevorstehenden Anlässe' : 'Keine Anlässe für diesen Filter'}
+          </p>
+          <p className="text-sm mt-1">
+            {events.length === 0
+              ? 'Anlässe manuell in `data/manual-events.json` eintragen'
+              : `${events.length} weitere Anlässe in dieser Kategorie ohne Filter`}
+          </p>
         </div>
       ) : (
         <ul className="space-y-4">
-          {events.map((e) => (
+          {filtered.map((e) => (
             <EventCard key={e.id} event={e} />
           ))}
         </ul>
@@ -83,7 +102,7 @@ function EventCard({ event: e }: { event: Event }) {
           <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-sm text-gray-500">
             <span>📅 {formatDateRange(e.startDate, e.endDate, e.startTime, e.endTime)}</span>
             <span>📍 {e.location}</span>
-            {e.source === 'luma' && (
+            {e.scraperId === 'luma' && (
               <span className="text-blue-400 text-xs">via Luma</span>
             )}
           </div>

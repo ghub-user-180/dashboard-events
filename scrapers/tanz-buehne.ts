@@ -1,18 +1,10 @@
 import * as cheerio from 'cheerio'
-import type { Event } from '../lib/types'
+import type { Scraper, RawEvent } from '../lib/scraper'
+import { HEADERS, stableId, sanitizeCity, extractCity } from '../lib/scraper-utils'
 
 const CATEGORY = 'tanz-buehne'
-const HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-}
 
-// ── Helpers ────────────────────────────────────────────────────────────────
-
-function stableId(prefix: string, title: string, date: string): string {
-  const raw = `${prefix}-${title}-${date}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-  return raw.slice(0, 80)
-}
+// ── Helpers (lokal — auf das spezifische Quell-Datumsformat zugeschnitten) ──
 
 const MONTHS: Record<string, string> = {
   januar: '01', februar: '02', märz: '03', maerz: '03',
@@ -52,9 +44,9 @@ function parseTimeRange(str: string): [string?, string?] {
 
 // ── 1. tanzevents.ch ────────────────────────────────────────────────────────
 
-export async function scrapeTanzevents(): Promise<Event[]> {
+async function scrapeTanzevents(): Promise<RawEvent[]> {
   const BASE = 'https://www.tanzevents.ch'
-  const events: Event[] = []
+  const events: RawEvent[] = []
 
   // Fetch up to 3 pages (adjust if needed)
   for (let page = 0; page <= 2; page++) {
@@ -85,9 +77,11 @@ export async function scrapeTanzevents(): Promise<Event[]> {
 
         const title = $el.find('.te-event-card__title').text().trim() || 'Tanzveranstaltung'
 
-        // Location: city from subtitle, full address from loc element
-        const city = $el.find('.te-event-card__lead .subtitle').text().trim() || 'Schweiz'
+        // Location: city zuerst aus subtitle, sonst aus loc-Adresse extrahieren
+        const cityRaw = $el.find('.te-event-card__lead .subtitle').text().trim()
         const locRaw = $el.find('.te-event-card__loc').text().replace(/\[.*?\]/g, '').replace('📍', '').trim()
+        const city = sanitizeCity(cityRaw) ?? extractCity(locRaw)
+        if (!city) return  // weder subtitle noch loc liefern eine saubere Stadt
         const location = locRaw || city
 
         events.push({
@@ -113,13 +107,13 @@ export async function scrapeTanzevents(): Promise<Event[]> {
 
 // ── 2. muevete.ch/salsaparties ──────────────────────────────────────────────
 
-export async function scrapeMuevete(): Promise<Event[]> {
+async function scrapeMuevete(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.muevete.ch/salsaparties/', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     // The page is plain text blocks — extract all text, parse line by line
     const bodyText = $('body').text()
@@ -150,6 +144,8 @@ export async function scrapeMuevete(): Promise<Event[]> {
 
       if (!title) continue
 
+      const muveteCity = extractCity(location)
+      if (!muveteCity) continue
       events.push({
         id: stableId('muevete', title, startDate),
         title,
@@ -157,7 +153,7 @@ export async function scrapeMuevete(): Promise<Event[]> {
         startTime,
         endTime,
         location,
-        city: location.split(',')[0].trim(),
+        city: muveteCity,
         category: CATEGORY,
         url: 'https://www.muevete.ch/salsaparties/',
         source: 'scraper',
@@ -173,13 +169,13 @@ export async function scrapeMuevete(): Promise<Event[]> {
 
 // ── 3. latinpromotion.ch/salsa-kalender ────────────────────────────────────
 
-export async function scrapeLatinPromotion(): Promise<Event[]> {
+async function scrapeLatinPromotion(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.latinpromotion.ch/salsa-kalender/', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     // Events are <a> tags containing date + title + location
     $('a').each((_, el) => {
@@ -210,7 +206,11 @@ export async function scrapeLatinPromotion(): Promise<Event[]> {
       // Location: address-like fragment after title, skip weekday fragments
       const afterDate = text.replace(dateMatch[0], '').replace(title, '').replace(/^\s*\/\s*/, '').trim()
       const locRaw = afterDate.split(/[/\n]/)[0].trim()
-      const location = locRaw && !WEEKDAYS.has(locRaw.toLowerCase()) ? locRaw : 'Schweiz'
+      if (!locRaw || WEEKDAYS.has(locRaw.toLowerCase())) return  // keine saubere Location → Event verwerfen
+      const location = locRaw
+
+      const lpCity = extractCity(location)
+      if (!lpCity) return  // kein Komma-Segment liefert eine saubere Stadt
 
       // URL: skip placeholder hrefs like "http://"
       const isValidHref = href && href.startsWith('http') && href.replace(/https?:\/\//, '').length > 2
@@ -225,7 +225,7 @@ export async function scrapeLatinPromotion(): Promise<Event[]> {
         title,
         startDate,
         location,
-        city: location.split(',')[0].trim(),
+        city: lpCity,
         category: CATEGORY,
         url,
         source: 'scraper',
@@ -241,7 +241,7 @@ export async function scrapeLatinPromotion(): Promise<Event[]> {
 
 // ── 4. ecstaticdancebern.ch → Google Calendar ICS ──────────────────────────
 
-export async function scrapeEcstaticDanceBern(): Promise<Event[]> {
+async function scrapeEcstaticDanceBern(): Promise<RawEvent[]> {
   // Public Google Calendar ICS feed — no API key needed
   const ICS_URL =
     'https://calendar.google.com/calendar/ical/fcc2odqjubobo9ejbaasi841t0%40group.calendar.google.com/public/basic.ics'
@@ -250,7 +250,7 @@ export async function scrapeEcstaticDanceBern(): Promise<Event[]> {
     const res = await fetch(ICS_URL, { headers: HEADERS })
     if (!res.ok) return []
     const ics = await res.text()
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     // Split into VEVENT blocks
     const blocks = ics.split('BEGIN:VEVENT').slice(1)
@@ -310,7 +310,7 @@ export async function scrapeEcstaticDanceBern(): Promise<Event[]> {
 
 // ── 5. forroaare.ch ─────────────────────────────────────────────────────────
 
-export async function scrapeForroAare(): Promise<Event[]> {
+async function scrapeForroAare(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.forroaare.ch', { headers: HEADERS })
     if (!res.ok) {
@@ -319,7 +319,7 @@ export async function scrapeForroAare(): Promise<Event[]> {
     }
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     // Try common event containers
     const candidates = $('[class*="event"], [class*="termin"], [class*="date"], article, .entry')
@@ -358,13 +358,13 @@ export async function scrapeForroAare(): Promise<Event[]> {
 
 // ── 6. Planlos Impro Bern ────────────────────────────────────────────────────
 
-export async function scrapePlanlos(): Promise<Event[]> {
+async function scrapePlanlos(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.planlos.be/programm', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     // Each event: <h3>Donnerstag 23.04.2026 um 20:00 Uhr</h3>
     //             <am-img>...<figcaption>Location</figcaption>...</am-img>
@@ -419,13 +419,13 @@ function danceappDate(day: number, month: number): string {
   return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
-export async function scrapeDanceApp(): Promise<Event[]> {
+async function scrapeDanceApp(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://danceapp.ch/events.php', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     $('a.event-card-link').each((_, el) => {
       const $el = $(el)
@@ -438,8 +438,9 @@ export async function scrapeDanceApp(): Promise<Event[]> {
         const metaText = $el.find('.event-meta-item').first().text().replace('📍', '').trim()
         city = metaText || ''
       }
-      // Strip postal code prefix (e.g. "8330 Pfäffikon ZH - ..." → "Pfäffikon ZH")
-      city = city.replace(/^\d{4,5}\s+/, '').split(' - ')[0].trim()
+      // Erstes ' - '-Segment behalten ("Pfäffikon ZH - Bar XY" → "Pfäffikon ZH"),
+      // dann sanitizeCity übernimmt PLZ + Kanton.
+      city = city.split(' - ')[0].trim()
 
       const dayStr = $el.find('.event-date-day').first().text().trim()
       const monthStr = $el.find('.event-date-month').first().text().trim().toLowerCase().slice(0, 3)
@@ -467,14 +468,16 @@ export async function scrapeDanceApp(): Promise<Event[]> {
       const title = $el.find('.event-info h3').text().trim()
       if (!title) return
 
+      const cleanCity = sanitizeCity(city)
+      if (!cleanCity) return  // city unsauber (PLZ, Strasse, Wochentag) → verwerfen
       events.push({
         id: stableId('danceapp', title, startDate),
         title,
         startDate,
         endDate: endDate && endDate !== startDate ? endDate : undefined,
         startTime,
-        location: city || 'Schweiz',
-        city: city || '',
+        location: cleanCity,
+        city: cleanCity,
         category: CATEGORY,
         url,
         source: 'scraper',
@@ -492,13 +495,13 @@ export async function scrapeDanceApp(): Promise<Event[]> {
 // roseway.ch — SSR WordPress, ytp-events widget
 // Date format: "30.05.2026 16:00 Uhr"
 
-export async function scrapeRoseway(): Promise<Event[]> {
+async function scrapeRoseway(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://roseway.ch/', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     $('.ytp-event-row').each((_, el) => {
       const $el = $(el)
@@ -516,7 +519,9 @@ export async function scrapeRoseway(): Promise<Event[]> {
       const startDate = `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}`
       const startTime = dateMatch[4] || undefined
 
-      const city = $el.find('.ytp-event-city').text().trim() || $el.find('.ytp-event-location').text().trim() || 'Schweiz'
+      const cityRaw = $el.find('.ytp-event-city').text().trim()
+      const city = sanitizeCity(cityRaw)
+      if (!city) return  // roseway ohne sauberen Stadt-Tag verwerfen
       const location = $el.find('.ytp-event-location').text().trim() || city
 
       // URL: link in the row, fallback to roseway.ch
@@ -547,13 +552,13 @@ export async function scrapeRoseway(): Promise<Event[]> {
 // kulturhof.ch — SSR WordPress, .event-block.event
 // Date format: "DD/MM/YY" (e.g. "11/04/26")
 
-export async function scrapeKulturhof(): Promise<Event[]> {
+async function scrapeKulturhof(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.kulturhof.ch/', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     $('.event-block.event').each((_, el) => {
       const $el = $(el)
@@ -593,4 +598,78 @@ export async function scrapeKulturhof(): Promise<Event[]> {
     console.error('kulturhof.ch error:', e)
     return []
   }
+}
+
+// ── Scraper-Registrierung ────────────────────────────────────────────────────
+
+export const tanzeventsScraper: Scraper = {
+  id: 'tanzevents',
+  name: 'Tanzevents.ch',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeTanzevents,
+}
+
+export const mueveteScraper: Scraper = {
+  id: 'muevete',
+  name: 'Muévete Salsaparties Bern',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeMuevete,
+}
+
+export const latinPromotionScraper: Scraper = {
+  id: 'latinpromotion',
+  name: 'Latin Promotion Salsa-Kalender',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeLatinPromotion,
+}
+
+export const ecstaticDanceBernScraper: Scraper = {
+  id: 'ecstaticdancebern',
+  name: 'Ecstatic Dance Bern',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeEcstaticDanceBern,
+}
+
+export const forroAareScraper: Scraper = {
+  id: 'forroaare',
+  name: 'Forró Aare',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeForroAare,
+}
+
+export const planlosScraper: Scraper = {
+  id: 'planlos',
+  name: 'Planlos Impro Theater Bern',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapePlanlos,
+}
+
+export const danceAppScraper: Scraper = {
+  id: 'danceapp',
+  name: 'DanceApp.ch',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeDanceApp,
+}
+
+export const rosewayScraper: Scraper = {
+  id: 'roseway',
+  name: 'Roseway Improtheater',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeRoseway,
+}
+
+export const kulturhofScraper: Scraper = {
+  id: 'kulturhof',
+  name: 'Kulturhof Köniz',
+  category: CATEGORY,
+  country: 'CH',
+  run: scrapeKulturhof,
 }

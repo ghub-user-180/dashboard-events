@@ -1,15 +1,7 @@
 import * as cheerio from 'cheerio'
-import type { Event } from '../lib/types'
-
-const HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-}
-
-function stableId(prefix: string, title: string, date: string): string {
-  const raw = `${prefix}-${title}-${date}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-  return raw.slice(0, 80)
-}
+import type { Scraper, RawEvent } from '../lib/scraper'
+import { HEADERS, stableId, sanitizeCity, extractCity } from '../lib/scraper-utils'
+import { normalizeCountry } from '../lib/geo'
 
 const MONTH_MAP: Record<string, string> = {
   jan: '01', feb: '02', mar: '03', mär: '03', apr: '04', mai: '05', may: '05',
@@ -23,24 +15,20 @@ function vbgDate(year: string, monthAbbr: string, day: string): string | null {
 }
 
 // ── VBG Agenda (Auszeiten / Retreats) ──────────────────────────────────────
-// vbg.net/agenda — server-side rendered, .kItem containers
 
-export async function scrapeVBG(): Promise<Event[]> {
+async function scrapeVBG(): Promise<RawEvent[]> {
   try {
     const res = await fetch('https://www.vbg.net/agenda', { headers: HEADERS })
     if (!res.ok) return []
     const html = await res.text()
     const $ = cheerio.load(html)
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
-    // Only take "Auszeiten" calendar (retreats/getaways), skip pure Anlässe
     $('.kItem').each((_, el) => {
       const $el = $(el)
       const calLabel = $el.attr('data-cal-label') ?? ''
-      // Include Auszeiten (retreats) and Kurse; skip single-evening Anlässe
       if (!['Auszeiten', 'Kurse', 'Seminare', 'Ferien'].some(k => calLabel.includes(k))) return
 
-      // Year+month from data-date e.g. "202604"
       const dataDate = $el.attr('data-date') ?? ''
       const dataDate2 = $el.attr('data-date2') ?? ''
       const year = dataDate.slice(0, 4)
@@ -51,31 +39,29 @@ export async function scrapeVBG(): Promise<Event[]> {
       const startDate = vbgDate(year, startMonth, startDay)
       if (!startDate) return
 
-      // End date (multi-day events)
       const endDay = $el.find('.enddate .day').text().trim()
       const endMonth = $el.find('.enddate .month').text().trim()
       const endYear = dataDate2.slice(0, 4) || year
       const endDate = endDay ? vbgDate(endYear, endMonth || startMonth, endDay) : undefined
 
-      // Title: first text node of .title, before the hidden span
       const titleNode = $el.find('.title').contents().filter((_, n) => n.type === 'text').first()
       const title = titleNode.text().trim()
       if (!title) return
 
-      // URL
       const href = $el.find('a.goSingle').attr('href') ?? ''
       const url = href ? `https://www.vbg.net${href}` : 'https://www.vbg.net/agenda'
 
-      const location = $el.attr('data-place') || 'Schweiz'
+      const location = $el.attr('data-place') || ''
+      const city = extractCity(location)
+      if (!city) return  // Kein Komma-Segment liefert sauberen Stadtnamen
 
       events.push({
         id: stableId('vbg', title, startDate),
         title,
         startDate,
         endDate: endDate && endDate !== startDate ? endDate : undefined,
-        location,
-        city: location.split(',')[0].trim() || 'Schweiz',
-        category: 'retreats',
+        location: location || city,
+        city,
         url,
         source: 'scraper',
       })
@@ -88,43 +74,153 @@ export async function scrapeVBG(): Promise<Event[]> {
   }
 }
 
-// ── Sensuality Festival ──────────────────────────────────────────────────────
-// sensualityfestival.com — single annual event, date in page text
-// Format: "DD-DD Month, YYYY" (e.g. "15-22 August, 2026")
-
-const SENSUALITY_MONTHS: Record<string, string> = {
-  january: '01', february: '02', march: '03', april: '04', may: '05', june: '06',
-  july: '07', august: '08', september: '09', october: '10', november: '11', december: '12',
+export const vbgScraper: Scraper = {
+  id: 'vbg',
+  name: 'VBG Agenda',
+  category: 'retreats',
+  country: 'CH',
+  run: scrapeVBG,
 }
 
-export async function scrapeSensualityFestival(): Promise<Event[]> {
+// ── CampFI (Tribe Events REST API) ───────────────────────────────────────────
+// campfi.org nutzt das WordPress-Plugin "The Events Calendar", das eine REST-API
+// unter /wp-json/tribe/events/v1/events liefert. Sauberes JSON pro Event,
+// inklusive venue.city und venue.country (als Vollname, wird normalisiert).
+
+interface TribeEvent {
+  title?: string
+  start_date?: string  // "YYYY-MM-DD HH:mm:ss"
+  end_date?: string
+  url?: string
+  venue?: { venue?: string; city?: string; country?: string }
+}
+
+async function scrapeCampFI(): Promise<RawEvent[]> {
   try {
-    const res = await fetch('https://www.sensualityfestival.com', { headers: HEADERS })
+    const res = await fetch('https://campfi.org/wp-json/tribe/events/v1/events?per_page=50', { headers: HEADERS })
     if (!res.ok) return []
-    const html = await res.text()
+    const data = (await res.json()) as { events?: TribeEvent[] }
+    const events: RawEvent[] = []
 
-    const match = html.match(/(\d{1,2})-(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)[,\s]+(\d{4})/i)
-    if (!match) return []
+    for (const e of data.events ?? []) {
+      if (!e.title || !e.start_date) continue
 
-    const startDay = match[1].padStart(2, '0')
-    const endDay = match[2].padStart(2, '0')
-    const month = SENSUALITY_MONTHS[match[3].toLowerCase()]
-    const year = match[4]
+      const startParts = e.start_date.split(' ')
+      const startDate = startParts[0]
+      const startTime = startParts[1]?.slice(0, 5)
 
-    return [{
-      id: `sensuality-festival-${year}`,
-      title: 'Sensuality Festival',
-      startDate: `${year}-${month}-${startDay}`,
-      endDate: `${year}-${month}-${endDay}`,
-      location: 'Czech Republic',
-      city: 'Czech Republic',
-      category: 'retreats',
-      description: 'Non-tantra festival about sexuality, relationships & body awareness.',
-      url: 'https://www.sensualityfestival.com',
-      source: 'scraper',
-    }]
+      const endParts = e.end_date?.split(' ') ?? []
+      const endDate = endParts[0]
+      const endTime = endParts[1]?.slice(0, 5)
+
+      const city = sanitizeCity(e.venue?.city ?? '')
+      if (!city) continue
+
+      const country = e.venue?.country ? normalizeCountry(e.venue.country) : null
+      if (!country) continue
+
+      const venueName = e.venue?.venue?.trim()
+      const location = [venueName, city].filter(Boolean).join(', ') || city
+
+      events.push({
+        id: stableId('campfi', e.title, startDate),
+        title: e.title,
+        startDate,
+        endDate: endDate && endDate !== startDate ? endDate : undefined,
+        startTime,
+        endTime,
+        location,
+        city,
+        country,
+        url: e.url ?? 'https://campfi.org/',
+        source: 'scraper',
+      })
+    }
+
+    return events
   } catch (e) {
-    console.error('sensualityfestival.com error:', e)
+    console.error('campfi.org error:', e)
     return []
   }
 }
+
+export const campfiScraper: Scraper = {
+  id: 'campfi',
+  name: 'CampFI',
+  category: 'retreats',
+  // kein country-Default — kommt pro Event aus venue.country (CampFI hat Camps in US, CA, ...)
+  run: scrapeCampFI,
+}
+
+// ── ZEGG Bildungszentrum (SeminarDesk WP-Plugin) ─────────────────────────────
+// zegg.de nutzt SeminarDesk, das schema.org-Microdata pro Event rendert.
+// Container: .sd-event mit data-start-date / data-end-date.
+
+async function scrapeZegg(): Promise<RawEvent[]> {
+  try {
+    const res = await fetch('https://www.zegg.de/de/veranstaltungen/programm', { headers: HEADERS })
+    if (!res.ok) return []
+    const html = await res.text()
+    const $ = cheerio.load(html)
+    const events: RawEvent[] = []
+
+    $('.sd-event[data-start-date]').each((_, el) => {
+      const $el = $(el)
+
+      const startDateAttr = $el.find('time[itemprop="startDate"]').attr('datetime') ?? ''
+      const endDateAttr = $el.find('time[itemprop="endDate"]').attr('datetime') ?? ''
+      if (!startDateAttr) return
+
+      const [startDate, startTimeRaw] = startDateAttr.split('T')
+      const startTime = startTimeRaw?.slice(0, 5)
+      const [endDate, endTimeRaw] = endDateAttr.split('T')
+      const endTime = endTimeRaw?.slice(0, 5)
+
+      const title = $el.find('h4[itemprop="name"]').text().trim()
+      if (!title) return
+
+      const city = sanitizeCity($el.find('[itemprop="addressLocality"]').text().trim())
+      if (!city) return
+
+      const country = $el.find('[itemprop="addressCountry"]').text().trim()
+      if (!country) return
+
+      const venueName = $el.find('.sd-event-location [itemprop="name"]').text().trim()
+      const location = venueName ? `${venueName}, ${city}` : city
+
+      const href = $el.find('a[itemprop="url"]').attr('href') ?? ''
+      const url = href.startsWith('http') ? href : `https://www.zegg.de${href}`
+
+      events.push({
+        id: stableId('zegg', title, startDate),
+        title,
+        startDate,
+        endDate: endDate && endDate !== startDate ? endDate : undefined,
+        startTime,
+        endTime,
+        location,
+        city,
+        country,
+        url,
+        source: 'scraper',
+      })
+    })
+
+    return events
+  } catch (e) {
+    console.error('zegg.de error:', e)
+    return []
+  }
+}
+
+export const zeggScraper: Scraper = {
+  id: 'zegg',
+  name: 'ZEGG Bildungszentrum',
+  category: 'retreats',
+  // kein country-Default — ZEGG sitzt in DE, pro Event aus schema.org addressCountry
+  run: scrapeZegg,
+}
+
+// Sensuality Festival entfernt: die Webseite liefert nur das Datum, keinen
+// konkreten Stadtnamen. Eintrag lebt jetzt in sources.json als pending,
+// bis der Ort manuell eingetragen werden kann.

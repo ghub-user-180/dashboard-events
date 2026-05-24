@@ -1,20 +1,12 @@
-import type { Event } from '../lib/types'
-
-const HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-}
-
-function stableId(prefix: string, title: string, date: string): string {
-  const raw = `${prefix}-${title}-${date}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
-  return raw.slice(0, 80)
-}
+import type { Scraper, RawEvent } from '../lib/scraper'
+import { normalizeCountry } from '../lib/geo'
+import { HEADERS, stableId, sanitizeCity } from '../lib/scraper-utils'
 
 // ── Bitvocation – Bitcoin Conferences ────────────────────────────────────────
 // bitvocation.com — JSON-LD ItemList (HTML-entity-encoded inside script tag)
-// 69 global Bitcoin conferences with startDate + location
+// International — country kommt pro Event aus addressCountry und wird auf ISO-2 normalisiert
 
-export async function scrapeBitvocation(): Promise<Event[]> {
+async function scrapeBitvocation(): Promise<RawEvent[]> {
   try {
     const res = await fetch(
       'https://bitvocation.com/bitcoin-conferences-discounts',
@@ -23,8 +15,6 @@ export async function scrapeBitvocation(): Promise<Event[]> {
     if (!res.ok) return []
     const html = await res.text()
 
-    // JSON-LD is in a <script children="..."> attribute (Nuxt.js pattern),
-    // HTML-entity-encoded. Extract the attribute value.
     const scriptMatch = html.match(/<script[^>]+type="application\/ld\+json"[^>]+children="({[^]*?})"/)
     if (!scriptMatch) return []
 
@@ -38,7 +28,7 @@ export async function scrapeBitvocation(): Promise<Event[]> {
     }
 
     const items = data.itemListElement ?? []
-    const events: Event[] = []
+    const events: RawEvent[] = []
 
     for (const item of items) {
       const e = item.item ?? {}
@@ -49,9 +39,17 @@ export async function scrapeBitvocation(): Promise<Event[]> {
 
       const loc = e.location as Record<string, unknown> | undefined
       const addr = (loc?.address ?? {}) as Record<string, unknown>
-      const city = (addr.addressLocality ?? '') as string
-      const country = (addr.addressCountry ?? '') as string
-      const locationName = (loc?.name as string | undefined) ?? [city, country].filter(Boolean).join(', ')
+      const rawCity = (addr.addressLocality ?? '') as string
+      const rawCountry = (addr.addressCountry ?? '') as string
+      const country = rawCountry ? normalizeCountry(rawCountry) : null
+      const city = sanitizeCity(rawCity)
+      const locationName = (loc?.name as string | undefined) ?? [rawCity, rawCountry].filter(Boolean).join(', ')
+
+      if (!country) {
+        if (rawCountry) console.warn(`bitvocation: unknown country "${rawCountry}" for "${name}"`)
+        continue
+      }
+      if (!city) continue
 
       events.push({
         id: stableId('bitvocation', name, startDate),
@@ -59,7 +57,7 @@ export async function scrapeBitvocation(): Promise<Event[]> {
         startDate,
         location: locationName || 'TBA',
         city,
-        category: 'festivals-konferenzen',
+        country,
         url: url ?? 'https://bitvocation.com/bitcoin-conferences-discounts',
         source: 'scraper',
       })
@@ -80,4 +78,12 @@ function decodeHtmlEntities(str: string): string {
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
+}
+
+export const bitvocationScraper: Scraper = {
+  id: 'bitvocation',
+  name: 'Bitvocation.com',
+  category: 'festivals-konferenzen',
+  // kein country-Default: bitvocation ist international, jeder Event bringt sein Land
+  run: scrapeBitvocation,
 }

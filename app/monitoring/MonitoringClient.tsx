@@ -18,18 +18,21 @@ interface SourceWithCount extends Source {
 const STATUS_LABELS: Record<string, string> = {
   active: 'Aktiv',
   pending: 'Ausstehend',
-  'no-event-relevance': 'Kein Event-Bezug',
+  draft: 'Entwurf',
+  'no-event-relevance': 'Kein Anlass-Bezug',
 }
 
 const STATUS_DOT: Record<string, string> = {
   active: 'bg-green-500',
   pending: 'bg-yellow-400',
+  draft: 'bg-orange-400',
   'no-event-relevance': 'bg-gray-300',
 }
 
 const STATUS_ROW_BG: Record<string, string> = {
   active: '',
   pending: '',
+  draft: 'opacity-75',
   'no-event-relevance': 'opacity-60',
 }
 
@@ -72,6 +75,7 @@ export default function MonitoringClient({
     total: sources.length,
     active: sources.filter((s) => s.status === 'active').length,
     pending: sources.filter((s) => s.status === 'pending').length,
+    draft: sources.filter((s) => s.status === 'draft').length,
     noEvent: sources.filter((s) => s.status === 'no-event-relevance').length,
   }
 
@@ -129,9 +133,13 @@ export default function MonitoringClient({
           <div className="text-2xl font-bold text-yellow-700">{stats.pending}</div>
           <div className="text-xs text-yellow-600 mt-0.5">○ Ausstehend</div>
         </div>
+        <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 text-center">
+          <div className="text-2xl font-bold text-orange-700">{stats.draft}</div>
+          <div className="text-xs text-orange-600 mt-0.5">◐ Entwurf</div>
+        </div>
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-center">
           <div className="text-2xl font-bold text-gray-400">{stats.noEvent}</div>
-          <div className="text-xs text-gray-400 mt-0.5">– Kein Event-Bezug</div>
+          <div className="text-xs text-gray-400 mt-0.5">– Kein Anlass-Bezug</div>
         </div>
       </div>
 
@@ -140,7 +148,7 @@ export default function MonitoringClient({
         {/* Status */}
         <div className="flex gap-2 flex-wrap items-center">
           <span className="text-xs text-gray-400 w-24 shrink-0">Status</span>
-          {(['all', 'active', 'pending', 'no-event-relevance'] as const).map((s) => (
+          {(['all', 'active', 'pending', 'draft', 'no-event-relevance'] as const).map((s) => (
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
@@ -225,7 +233,7 @@ export default function MonitoringClient({
                 <th className="px-4 py-2.5 font-medium text-gray-500 hidden md:table-cell">Bookmark-Kat.</th>
                 <th className="px-4 py-2.5 font-medium text-gray-500 hidden lg:table-cell">Dashboard-Kat.</th>
                 <th className="px-4 py-2.5 font-medium text-gray-500 hidden md:table-cell">Typ</th>
-                <th className="px-4 py-2.5 font-medium text-gray-500 text-center w-16">Events</th>
+                <th className="px-4 py-2.5 font-medium text-gray-500 text-center w-16">Anlässe</th>
                 <th className="px-4 py-2.5 font-medium text-gray-500 text-center w-24">HTTP</th>
                 <th className="px-4 py-2.5 font-medium text-gray-500 hidden xl:table-cell">Notiz</th>
               </tr>

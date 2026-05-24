@@ -32,7 +32,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="bg-white border border-gray-200 rounded-2xl p-8 w-full max-w-sm shadow-sm">
-        <h1 className="text-xl font-bold text-gray-900 mb-1">Event Dashboard</h1>
+        <h1 className="text-xl font-bold text-gray-900 mb-1">Anlässe</h1>
         <p className="text-sm text-gray-400 mb-6">Bitte Passwort eingeben</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
