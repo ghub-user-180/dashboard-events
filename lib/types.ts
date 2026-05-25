@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
 export const CATEGORY_IDS = [
-  'ausgehen',
-  'sozialleben',
-  'tanz-buehne',
-  'festivals-konferenzen',
-  'retreats',
-  'austausch',
-  'wassersport',
+  'buehne-konzerte',
+  'tanz',
+  'singles-dating',
+  'begegnungen',
   'sport',
+  'konferenzen',
+  'festivals',
+  'retreats-austausch',
 ] as const
 
 export type CategoryId = typeof CATEGORY_IDS[number]

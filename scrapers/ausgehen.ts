@@ -102,7 +102,7 @@ async function scrapeJazzkantine(): Promise<RawEvent[]> {
 export const schuurScraper: Scraper = {
   id: 'schuur',
   name: 'Konzerthaus Schüür',
-  category: 'ausgehen',
+  category: 'buehne-konzerte',
   country: 'CH',
   run: scrapeSchuur,
 }
@@ -110,7 +110,7 @@ export const schuurScraper: Scraper = {
 export const jazzkantineScraper: Scraper = {
   id: 'jazzkantine',
   name: 'Jazzkantine Luzern',
-  category: 'ausgehen',
+  category: 'buehne-konzerte',
   country: 'CH',
   run: scrapeJazzkantine,
 }

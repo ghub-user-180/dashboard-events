@@ -9,7 +9,7 @@ interface Props {
   facets: GeoFacets
 }
 
-type MultiKey = 'continent' | 'country' | 'city'
+type MultiKey = 'continent' | 'country' | 'city' | 'cat'
 type SingleKey = 'range' | 'duration'
 
 const RANGE_OPTIONS: Array<{ value: RangeFilter; label: string }> = [
@@ -40,6 +40,14 @@ export function Filter({ facets }: Props) {
     return params.get(key) ?? fallback
   }
 
+  // Live aus dem Browser lesen (nicht aus dem React-Closure), damit zwei
+  // schnelle Klicks während einer pending Transition nicht beide auf dem
+  // gleichen veralteten Snapshot operieren und sich gegenseitig überschreiben.
+  const currentParams = (): URLSearchParams =>
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window.location.search)
+      : new URLSearchParams(params.toString())
+
   const writeParams = (next: URLSearchParams) => {
     const qs = next.toString()
     startTransition(() => {
@@ -48,32 +56,33 @@ export function Filter({ facets }: Props) {
   }
 
   const toggleMulti = (key: MultiKey, value: string) => {
-    const current = getMulti(key)
+    const newParams = currentParams()
+    const current = (newParams.get(key)?.split(',').filter(Boolean)) ?? []
     const next = current.includes(value)
       ? current.filter((v) => v !== value)
       : [...current, value]
-    const newParams = new URLSearchParams(params.toString())
     if (next.length) newParams.set(key, next.join(','))
     else newParams.delete(key)
     writeParams(newParams)
   }
 
   const setSingle = (key: SingleKey, value: string, fallback: string) => {
-    const newParams = new URLSearchParams(params.toString())
+    const newParams = currentParams()
     if (value === fallback) newParams.delete(key)
     else newParams.set(key, value)
     writeParams(newParams)
   }
 
   const clearAll = () => {
-    const newParams = new URLSearchParams(params.toString())
-    for (const k of ['continent', 'country', 'city', 'range', 'duration'] as const) newParams.delete(k)
+    const newParams = currentParams()
+    for (const k of ['continent', 'country', 'city', 'range', 'duration', 'cat'] as const) newParams.delete(k)
     writeParams(newParams)
   }
 
   const selectedContinents = getMulti('continent')
   const selectedCountries = getMulti('country')
   const selectedCities = getMulti('city')
+  const selectedCategories = getMulti('cat')
   const selectedRange = getSingle('range', 'all') as RangeFilter
   const selectedDuration = getSingle('duration', 'all') as DurationFilter
 
@@ -81,6 +90,7 @@ export function Filter({ facets }: Props) {
     selectedContinents.length +
     selectedCountries.length +
     selectedCities.length +
+    selectedCategories.length +
     (selectedRange !== 'all' ? 1 : 0) +
     (selectedDuration !== 'all' ? 1 : 0)
 

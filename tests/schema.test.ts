@@ -8,7 +8,7 @@ const baseEvent = {
   location: 'Some Venue',
   city: 'Bern',
   country: 'CH',
-  category: 'tanz-buehne' as const,
+  category: 'tanz' as const,
   source: 'manual' as const,
 }
 

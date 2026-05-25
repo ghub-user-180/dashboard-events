@@ -72,7 +72,7 @@ async function scrapeBarhopping(): Promise<RawEvent[]> {
 export const barhoppingScraper: Scraper = {
   id: 'barhopping',
   name: 'Barhopping',
-  category: 'sozialleben',
+  category: 'singles-dating',
   country: 'CH',
   run: scrapeBarhopping,
 }

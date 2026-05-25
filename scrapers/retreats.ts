@@ -77,7 +77,7 @@ async function scrapeVBG(): Promise<RawEvent[]> {
 export const vbgScraper: Scraper = {
   id: 'vbg',
   name: 'VBG Agenda',
-  category: 'retreats',
+  category: 'retreats-austausch',
   country: 'CH',
   run: scrapeVBG,
 }
@@ -147,7 +147,7 @@ async function scrapeCampFI(): Promise<RawEvent[]> {
 export const campfiScraper: Scraper = {
   id: 'campfi',
   name: 'CampFI',
-  category: 'retreats',
+  category: 'retreats-austausch',
   // kein country-Default — kommt pro Event aus venue.country (CampFI hat Camps in US, CA, ...)
   run: scrapeCampFI,
 }
@@ -216,7 +216,7 @@ async function scrapeZegg(): Promise<RawEvent[]> {
 export const zeggScraper: Scraper = {
   id: 'zegg',
   name: 'ZEGG Bildungszentrum',
-  category: 'retreats',
+  category: 'retreats-austausch',
   // kein country-Default — ZEGG sitzt in DE, pro Event aus schema.org addressCountry
   run: scrapeZegg,
 }

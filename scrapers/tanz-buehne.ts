@@ -2,7 +2,8 @@ import * as cheerio from 'cheerio'
 import type { Scraper, RawEvent } from '../lib/scraper'
 import { HEADERS, stableId, sanitizeCity, extractCity } from '../lib/scraper-utils'
 
-const CATEGORY = 'tanz-buehne'
+const TANZ = 'tanz'
+const BUEHNE = 'buehne-konzerte'
 
 // ── Helpers (lokal — auf das spezifische Quell-Datumsformat zugeschnitten) ──
 
@@ -91,8 +92,7 @@ async function scrapeTanzevents(): Promise<RawEvent[]> {
           startTime,
           location,
           city,
-          category: CATEGORY,
-          url: fullUrl,
+            url: fullUrl,
           source: 'scraper',
         })
       })
@@ -154,7 +154,6 @@ async function scrapeMuevete(): Promise<RawEvent[]> {
         endTime,
         location,
         city: muveteCity,
-        category: CATEGORY,
         url: 'https://www.muevete.ch/salsaparties/',
         source: 'scraper',
       })
@@ -226,7 +225,6 @@ async function scrapeLatinPromotion(): Promise<RawEvent[]> {
         startDate,
         location,
         city: lpCity,
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -294,7 +292,6 @@ async function scrapeEcstaticDanceBern(): Promise<RawEvent[]> {
         endTime,
         location,
         city: 'Bern',
-        category: CATEGORY,
         description: description || undefined,
         url,
         source: 'scraper',
@@ -343,7 +340,6 @@ async function scrapeForroAare(): Promise<RawEvent[]> {
         endTime,
         location: 'Bern / Aare Region',
         city: 'Bern',
-        category: CATEGORY,
         url: 'https://www.forroaare.ch',
         source: 'scraper',
       })
@@ -391,7 +387,6 @@ async function scrapePlanlos(): Promise<RawEvent[]> {
         startTime,
         location,
         city: 'Bern',
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -478,7 +473,6 @@ async function scrapeDanceApp(): Promise<RawEvent[]> {
         startTime,
         location: cleanCity,
         city: cleanCity,
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -535,7 +529,6 @@ async function scrapeRoseway(): Promise<RawEvent[]> {
         startTime,
         location,
         city,
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -587,7 +580,6 @@ async function scrapeKulturhof(): Promise<RawEvent[]> {
         startTime,
         location: 'Kulturhof Köniz',
         city: 'Köniz',
-        category: CATEGORY,
         url,
         source: 'scraper',
       })
@@ -605,7 +597,7 @@ async function scrapeKulturhof(): Promise<RawEvent[]> {
 export const tanzeventsScraper: Scraper = {
   id: 'tanzevents',
   name: 'Tanzevents.ch',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeTanzevents,
 }
@@ -613,7 +605,7 @@ export const tanzeventsScraper: Scraper = {
 export const mueveteScraper: Scraper = {
   id: 'muevete',
   name: 'Muévete Salsaparties Bern',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeMuevete,
 }
@@ -621,7 +613,7 @@ export const mueveteScraper: Scraper = {
 export const latinPromotionScraper: Scraper = {
   id: 'latinpromotion',
   name: 'Latin Promotion Salsa-Kalender',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeLatinPromotion,
 }
@@ -629,7 +621,7 @@ export const latinPromotionScraper: Scraper = {
 export const ecstaticDanceBernScraper: Scraper = {
   id: 'ecstaticdancebern',
   name: 'Ecstatic Dance Bern',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeEcstaticDanceBern,
 }
@@ -637,7 +629,7 @@ export const ecstaticDanceBernScraper: Scraper = {
 export const forroAareScraper: Scraper = {
   id: 'forroaare',
   name: 'Forró Aare',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeForroAare,
 }
@@ -645,7 +637,7 @@ export const forroAareScraper: Scraper = {
 export const planlosScraper: Scraper = {
   id: 'planlos',
   name: 'Planlos Impro Theater Bern',
-  category: CATEGORY,
+  category: BUEHNE,
   country: 'CH',
   run: scrapePlanlos,
 }
@@ -653,7 +645,7 @@ export const planlosScraper: Scraper = {
 export const danceAppScraper: Scraper = {
   id: 'danceapp',
   name: 'DanceApp.ch',
-  category: CATEGORY,
+  category: TANZ,
   country: 'CH',
   run: scrapeDanceApp,
 }
@@ -661,7 +653,7 @@ export const danceAppScraper: Scraper = {
 export const rosewayScraper: Scraper = {
   id: 'roseway',
   name: 'Roseway Improtheater',
-  category: CATEGORY,
+  category: BUEHNE,
   country: 'CH',
   run: scrapeRoseway,
 }
@@ -669,7 +661,7 @@ export const rosewayScraper: Scraper = {
 export const kulturhofScraper: Scraper = {
   id: 'kulturhof',
   name: 'Kulturhof Köniz',
-  category: CATEGORY,
+  category: BUEHNE,
   country: 'CH',
   run: scrapeKulturhof,
 }

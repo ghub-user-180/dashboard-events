@@ -14,7 +14,7 @@
     "name": "Harlem Jazz Club Barcelona",
     "url": "https://www.harlemjazzclub.es/en/",
     "bookmarkCategory": "Ausgehen-Ausland",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Barcelona — geografisch irrelevant"
@@ -34,7 +34,7 @@
     "name": "Südpol Luzern – Programm",
     "url": "https://www.sudpol.ch/programm/",
     "bookmarkCategory": "Ausgehen-Luzern",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "pending",
     "notes": "Nuxt.js client-side — kein statischer Inhalt scrapbar"
@@ -44,7 +44,7 @@
     "name": "kiosk – Programm Luzern",
     "url": "https://www.kioskiosk.ch/",
     "bookmarkCategory": "Ausgehen-Luzern",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "pending",
     "notes": "Zu prüfen: statisch oder client-side?"
@@ -54,7 +54,7 @@
     "name": "Jazzkantine Luzern",
     "url": "https://www.jazzkantine.com/",
     "bookmarkCategory": "Ausgehen-Luzern",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeJazzkantine)"
@@ -64,7 +64,7 @@
     "name": "Konzerthaus Schüür – Programm",
     "url": "https://www.schuur.ch/programm/",
     "bookmarkCategory": "Ausgehen-Luzern",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeSchuur)"
@@ -74,7 +74,7 @@
     "name": "Gangus Luzern",
     "url": "https://gangus.ch/",
     "bookmarkCategory": "Ausgehen-Luzern",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "pending",
     "notes": "2026-05-24: Aufgenommen als potenzielle Luzern-Quelle. Next.js SPA — Event-Daten kommen client-side, statisches HTML liefert nichts. Braucht Headless-Browser (Phase 5c) oder API-Endpoint via Browser-DevTools identifizieren."
@@ -121,7 +121,7 @@
     "name": "St.Gervais Genf",
     "url": "https://stgervais.ch/",
     "bookmarkCategory": "Ausgehen-Schweiz",
-    "dashboardCategory": "ausgehen",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Kulturzentrum Genf — Struktur prüfen"
@@ -131,7 +131,7 @@
     "name": "Luma – Events entdecken",
     "url": "https://lu.ma/discover",
     "bookmarkCategory": "Ausgehen-Schweiz",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "api",
     "status": "active",
     "notes": "API konfiguriert, wartet auf LUMA_API_KEY in Vercel env"
@@ -141,7 +141,7 @@
     "name": "Social Circle Zürich",
     "url": "https://social-circle.ch/",
     "bookmarkCategory": "Ausgehen-Schweiz",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "pending",
     "notes": "Expat-Events Zürich — Struktur prüfen"
@@ -151,7 +151,7 @@
     "name": "Glocals – Expat Community Switzerland",
     "url": "https://www.glocals.com/",
     "bookmarkCategory": "Ausgehen-Schweiz",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "pending",
     "notes": "Grösste Expat-Community CH — Struktur prüfen"
@@ -190,7 +190,7 @@
     "name": "bee-flat im PROGR – Einsatzplan",
     "url": "https://www.bee-flat.ch/einsatzplan",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending",
     "notes": "Freiwilligen-Einsatzplan"
@@ -209,7 +209,7 @@
     "name": "Caritas Bergeinsatz",
     "url": "https://www.bergeinsatz.ch/de/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Saisonale Bergbauern-Einsätze"
@@ -246,7 +246,7 @@
     "name": "IFIL – Initiative for Intercultural Learning",
     "url": "https://ifil.ch/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -282,7 +282,7 @@
     "name": "SCI – 1000 Workcamps in 90 Ländern",
     "url": "https://scich.org/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending",
     "notes": "Camps auf externer DB (volunteer.sci.ngo) — nicht direkt scrapbar"
@@ -319,7 +319,7 @@
     "name": "Friedensdorf / Village de la Paix",
     "url": "https://villagedelapaix.ch/de/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -328,7 +328,7 @@
     "name": "ZEGG Gemeinschaft & Bildungszentrum",
     "url": "https://www.zegg.de/de/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "active",
     "notes": "2026-05-24: Aktiver Scraper (scrapeZegg) — parsed schema.org-Microdata aus SeminarDesk-Plugin (.sd-event mit itemprop=startDate/addressLocality/addressCountry)."
@@ -338,7 +338,7 @@
     "name": "Hackergarten",
     "url": "https://www.hackergarten.net/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -347,7 +347,7 @@
     "name": "Karma Lama",
     "url": "https://www.karmalama.ch/",
     "bookmarkCategory": "Austausch-Volunteering",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -640,7 +640,7 @@
     "name": "Sun and Co. – Coliving Javea",
     "url": "https://sun-and-co.com/",
     "bookmarkCategory": "Co-Livings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Coliving Javea — Unterkunft, kein Eventkalender"
@@ -668,7 +668,7 @@
     "name": "Nomad Retreats",
     "url": "https://www.nomadretreats.co/",
     "bookmarkCategory": "Co-Livings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending",
     "notes": "JS-gerendert — Headless-Browser nötig"
@@ -678,7 +678,7 @@
     "name": "Nomad in Transylvania",
     "url": "https://www.nomadintransylvania.com/",
     "bookmarkCategory": "Co-Livings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -714,7 +714,7 @@
     "name": "Conscious:Love – Bewusste Beziehungen",
     "url": "https://conscious-love.com/",
     "bookmarkCategory": "Dating",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Hat Workshops und Events"
@@ -724,7 +724,7 @@
     "name": "Kin – Meet Strangers for Coffee",
     "url": "https://www.kinconnect.com/",
     "bookmarkCategory": "Dating",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Matching-Plattform, kein Eventkalender"
@@ -770,7 +770,7 @@
     "name": "AfueraFest",
     "url": "https://afuerafest.de/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "Jährliches Festival DE — prüfen ob 2026 stattfindet"
@@ -780,7 +780,7 @@
     "name": "Temple of the Way of Light – Ayahuasca",
     "url": "https://templeofthewayoflight.org/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -789,7 +789,7 @@
     "name": "Breathwork Lebenshauch Luzern",
     "url": "https://www.lebenshauch.ch/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending",
     "notes": "Wix/Thunderbolt client-side — kein statischer Inhalt"
@@ -799,7 +799,7 @@
     "name": "Hillsong Denmark – Kalender",
     "url": "https://hillsongdenmark.churchcenter.com/calendar",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kirchenkalender Dänemark — nicht dashboard-relevant"
@@ -809,7 +809,7 @@
     "name": "der4temusketier",
     "url": "https://www.der4temusketier.ch/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending"
   },
@@ -818,7 +818,7 @@
     "name": "Tai Chi Bali – Mountain Retreat",
     "url": "https://taichibali.com/mountain-retreat/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -827,7 +827,7 @@
     "name": "HERMANOSIS",
     "url": "https://hermanosis.com/en/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Prüfung: kein relevanter Eventkalender gefunden"
@@ -837,7 +837,7 @@
     "name": "Hridaya Yoga – Silent Meditation Retreats",
     "url": "https://hridaya-yoga.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -846,7 +846,7 @@
     "name": "LARP Calendar",
     "url": "https://larpcal.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "Aggregiert LARP-Events weltweit"
@@ -856,7 +856,7 @@
     "name": "mission.ch – Einsätze",
     "url": "https://www.mission.ch/de/einsaetze.html",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -874,7 +874,7 @@
     "name": "SET & SETTING Retreat",
     "url": "https://www.setandsetting-retreat.com/retreats",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending",
     "notes": "Retreat-Übersicht — Struktur prüfen"
@@ -884,7 +884,7 @@
     "name": "Festival of Sensuality – Czech Republic",
     "url": "https://www.sensualityfestival.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "2026-05-24: Scraper entfernt — Webseite liefert nur Datum, keinen konkreten Stadtnamen. Manuell eintragen sobald der Veranstaltungsort der jeweiligen Ausgabe bekannt ist."
@@ -903,7 +903,7 @@
     "name": "VBG – Agenda Ferien & Kurse",
     "url": "https://www.vbg.net/agenda",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeVBG) 2026-05-24: ID von vbg-net auf vbg vereinheitlicht (matches Code)."
@@ -913,7 +913,7 @@
     "name": "Vrai Repaire Festival – Frankreich",
     "url": "https://www.vrairepaire.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "Jährliches Festival FR — prüfen"
@@ -923,7 +923,7 @@
     "name": "CampFI – Together We FI",
     "url": "https://campfi.org/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "active",
     "notes": "2026-05-24: Aktiver Scraper (scrapeCampFI) — nutzt Tribe Events REST-API /wp-json/tribe/events/v1/events. Liefert venue.city + venue.country pro Event."
@@ -933,7 +933,7 @@
     "name": "FI Freedom Retreats",
     "url": "https://www.fifreedomretreats.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "manual",
     "status": "pending",
     "notes": "2026-05-24: Squarespace ohne Event-Daten im statischen HTML — Trip-Daten kommen client-side. Manuell eintragen sobald konkrete Ausgabe (Stadt + Datum) bekannt."
@@ -943,7 +943,7 @@
     "name": "EconoMe Conference",
     "url": "https://economeconference.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "no-event-relevance",
     "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; jährlich März, Stadt wechselt innerhalb USA. Manuell eintragen sobald Stadt 2027 bekannt."
@@ -962,7 +962,7 @@
     "name": "Plan ₿ Forum Lugano",
     "url": "https://planb.lugano.ch/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "no-event-relevance",
     "notes": "2026-05-24: Aus manual-events.json entfernt — Plan B Forum Lugano ist in bitvocation-Scraper enthalten."
@@ -972,7 +972,7 @@
     "name": "Crypto Events Global",
     "url": "https://cryptoevents.global/point-zero-forum-2025-zurich/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Einzellink zu Point Zero Forum 2025 — vergangen"
@@ -982,7 +982,7 @@
     "name": "BitBlockBoom! Conference",
     "url": "https://bitblockboom.com/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "no-event-relevance",
     "notes": "2026-05-24: Aus manual-events.json entfernt — BitBlockBoom ist in bitvocation-Scraper enthalten."
@@ -992,7 +992,7 @@
     "name": "Baltic Honeybadger – Bitcoin Conference",
     "url": "https://baltichoneybadger.com/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1002,7 +1002,7 @@
     "name": "Bitvocation – Bitcoin Conferences",
     "url": "https://bitvocation.com/bitcoin-conferences-discounts",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeBitvocation) — JSON-LD children-Attribut, 69 Bitcoin-Konferenzen"
@@ -1012,7 +1012,7 @@
     "name": "LibertyCon Europe",
     "url": "https://libertycon.net/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "pending",
     "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; jährlich, Ort wechselt. Manuell eintragen sobald Stadt/Datum konkret."
@@ -1022,7 +1022,7 @@
     "name": "Point Zero Forum Zürich",
     "url": "https://www.pointzeroforum.com/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1042,7 +1042,7 @@
     "name": "Paralelní Polis – HCPP",
     "url": "https://paralelnipolis.cz/o-nas/en/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1052,7 +1052,7 @@
     "name": "LIWC 2025 Buenos Aires",
     "url": "https://liberty-intl.org/liwc2025/",
     "bookmarkCategory": "Konferenzen",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "LIWC 2025 Buenos Aires — vergangenes Einzelevent"
@@ -1080,7 +1080,7 @@
     "name": "Hacker Paradise",
     "url": "https://www.hackerparadise.org/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Remote-Work Coliving, kein Eventkalender"
@@ -1099,7 +1099,7 @@
     "name": "Soulquest – Conscious Nomad Community",
     "url": "https://www.soulquest.life/brazil",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -1225,7 +1225,7 @@
     "name": "Traveling Lifestyle – Nomad Events",
     "url": "https://www.travelinglifestyle.net/digital-nomad-conferences-retreats-events-2024/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "Zeitlich begrenzte Liste 2025-2026 — besser Direktquellen nutzen"
@@ -1272,7 +1272,7 @@
     "name": "BookRetreats.com",
     "url": "https://bookretreats.com/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Grosse Plattform — API oder Headless prüfen"
@@ -1282,7 +1282,7 @@
     "name": "MINOMA Retreat",
     "url": "https://retreats.minoma.co/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "pending"
   },
@@ -1291,7 +1291,7 @@
     "name": "Nomads in Paradise",
     "url": "https://nomads-in-paradise.com/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "scraper",
     "status": "pending",
     "notes": "Zu prüfen: Nomad-Events ohne festes Format"
@@ -1366,7 +1366,7 @@
     "name": "Bansko Nomad Fest",
     "url": "https://www.banskonomadfest.com/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "festivals-konferenzen",
+    "dashboardCategory": "konferenzen",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1376,7 +1376,7 @@
     "name": "Mindvalley",
     "url": "https://www.mindvalley.com/",
     "bookmarkCategory": "Nomadthings",
-    "dashboardCategory": "retreats",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Zu prüfen: Events vorhanden, Struktur unklar"
@@ -1459,7 +1459,7 @@
     "name": "Tallinn University Summer School",
     "url": "https://summerschool.tlu.ee/russian-language/",
     "bookmarkCategory": "Sommer-Schools",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1469,7 +1469,7 @@
     "name": "Summer Schools in Europe",
     "url": "https://www.summerschoolsineurope.eu/",
     "bookmarkCategory": "Sommer-Schools",
-    "dashboardCategory": "austausch",
+    "dashboardCategory": "retreats-austausch",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "FacetWP AJAX — benötigt Nonce/Session, kein statischer Inhalt"
@@ -1479,7 +1479,7 @@
     "name": "noii – Events & Community",
     "url": "https://www.noii.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "pending",
     "notes": "Zu prüfen: date.noii.ch/preview — Struktur unklar"
@@ -1489,7 +1489,7 @@
     "name": "MeetByChance – Singles Community",
     "url": "https://www.meetbychance.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Matching-Plattform, kein Eventkalender"
@@ -1499,7 +1499,7 @@
     "name": "Barhopping für Singles",
     "url": "https://barhopping.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "singles-dating",
     "type": "scraper",
     "status": "active",
     "notes": "2026-05-24: Aktiver Scraper (scrapeBarhopping) — schema.org-Microdata pro Event mit verschiedenen Altersgruppen."
@@ -1509,7 +1509,7 @@
     "name": "Timeleft – Dinner mit Unbekannten",
     "url": "https://timeleft.com/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -1519,7 +1519,7 @@
     "name": "GADWAS Verein",
     "url": "https://www.gadwas.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "pending"
   },
@@ -1528,7 +1528,7 @@
     "name": "LiLi Centre",
     "url": "https://lilicentre.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "pending",
     "notes": "2026-05-24: WordPress mit client-side Event-Plugin (Elementor Astra) — kein REST-Endpoint, /calendar leer im statischen HTML. Phase 5c (Headless) oder Network-Tab inspizieren."
@@ -1538,7 +1538,7 @@
     "name": "Rhetorik Club Bern – Toastmasters",
     "url": "https://rcbe.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1547,7 +1547,7 @@
     "name": "Toastmasters Bern Club",
     "url": "https://www.toastmasters.org/Find-a-Club/00003436-bern-toastmasters-club",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1556,7 +1556,7 @@
     "name": "Rhetorik Clubs Schweiz",
     "url": "https://www.rhetorikclubs.ch/",
     "bookmarkCategory": "Sozialleben",
-    "dashboardCategory": "sozialleben",
+    "dashboardCategory": "begegnungen",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1565,7 +1565,7 @@
     "name": "Caribe Dance Schule",
     "url": "https://caribedance.ch/kontakt",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1574,7 +1574,7 @@
     "name": "contactimprovisation.ch",
     "url": "https://www.contactimprovisation.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1593,7 +1593,7 @@
     "name": "Salsa Lovers Worldwide",
     "url": "https://www.salsaloversworldwide.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Internationale Plattform ohne CH-Bezug"
@@ -1603,7 +1603,7 @@
     "name": "DanceAbroad",
     "url": "https://danceabroad.com/index.html",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Tanzreisen ohne strukturierten Kalender"
@@ -1613,7 +1613,7 @@
     "name": "Danse DARC – Festival",
     "url": "https://www.danses-darc.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "pending"
   },
@@ -1622,7 +1622,7 @@
     "name": "Ecstatic Dance Bern",
     "url": "https://ecstaticdancebern.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper via Google Calendar ICS-Feed"
@@ -1632,7 +1632,7 @@
     "name": "Forró Aare",
     "url": "https://www.forroaare.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper — HTTP 403, 0 Events (geblockt)"
@@ -1652,7 +1652,7 @@
     "name": "KULTURHOF Schloss Köniz",
     "url": "https://www.kulturhof.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeKulturhof) — .event-block.event, ~15 Events"
@@ -1672,7 +1672,7 @@
     "name": "Latin Promotion – Salsakurse Zug",
     "url": "https://latinpromotion.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1681,7 +1681,7 @@
     "name": "Latin Promotion – Salsa-Kalender",
     "url": "https://latinpromotion.ch/salsa-kalender/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeLatinPromotion) 2026-05-24: ID von latinpromotion-kalender auf latinpromotion vereinheitlicht (matches Code)."
@@ -1710,7 +1710,7 @@
     "name": "tanzevents.ch – Salsa & Bachata",
     "url": "https://tanzevents.ch/events.php?read_group=12",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeTanzevents) — URL: tanzevents.ch/events.php"
@@ -1720,7 +1720,7 @@
     "name": "muevete – Salsa-Partys Bern",
     "url": "https://muevete.ch/salsaparties/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeMuevete)"
@@ -1739,7 +1739,7 @@
     "name": "Salsadancers – Bern & Thun",
     "url": "https://salsadancers.ch/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "pending"
   },
@@ -1758,7 +1758,7 @@
     "name": "simplyforro – Notion Kalender",
     "url": "https://simplyforro.notion.site/42f9fe6ead9544338eb4d5ee5c85e13e",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "api",
     "status": "no-event-relevance",
     "notes": "Notion Public DB — Notion API nutzbar"
@@ -1768,7 +1768,7 @@
     "name": "SwingPlanIt – Worldwide Swing Dance Events",
     "url": "https://www.swingplanit.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Worldwide Swing Events — API prüfen"
@@ -1778,7 +1778,7 @@
     "name": "tanzevents.ch – Alle Tanzevents",
     "url": "https://tanzevents.ch/-tanzen/de/events/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "none",
     "status": "pending",
     "notes": "2026-05-24: Geisterquelle — diese URL (/tanzen/de/events/) hat keinen Scraper-Code. Aktueller tanzevents-Scraper deckt nur /events.php?read_group=12 ab. Falls die zweite URL Mehrwert bringt, eigenen Scraper bauen."
@@ -1797,7 +1797,7 @@
     "name": "Vem Vem – Forró Events",
     "url": "https://forrovemvem.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1806,7 +1806,7 @@
     "name": "Leon Dance Art – Interlaken & Bern",
     "url": "https://leondanceart.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1815,7 +1815,7 @@
     "name": "Tango Wave Zürich",
     "url": "https://www.tango-zurich.com/",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1824,7 +1824,7 @@
     "name": "SalsaRica Zürich",
     "url": "https://salsarica.ch/home.html",
     "bookmarkCategory": "Tanz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "pending"
   },
@@ -1853,7 +1853,7 @@
     "name": "Die Verstörten Wunschkinder",
     "url": "https://www.die-verstoerten-wunschkinder.de/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Deutsches Theater, geografisch irrelevant"
@@ -1873,7 +1873,7 @@
     "name": "attento – Improkurse",
     "url": "https://www.attento.ch/impro/kursprogramm",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Impro-Kurse Schweiz — Struktur prüfen"
@@ -1893,7 +1893,7 @@
     "name": "theater anundpfirsich",
     "url": "https://pfirsi.ch/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "pending",
     "notes": "Berner Impro-Theater — Struktur prüfen"
@@ -1921,7 +1921,7 @@
     "name": "planlos.be – Improtheater Bern",
     "url": "https://www.planlos.be/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapePlanlos)"
@@ -1931,7 +1931,7 @@
     "name": "Roseway Improtheater",
     "url": "https://roseway.ch/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "buehne-konzerte",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeRoseway) — ytp-events Widget"
@@ -1951,7 +1951,7 @@
     "name": "The Caretakers",
     "url": "https://www.thecaretakers.ch/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Schweizer Theater — Struktur prüfen"
@@ -1961,7 +1961,7 @@
     "name": "theater anundpfirsich – Yourstage",
     "url": "https://yourstage.live/authors/theater-anundpfirsich",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Theater anundpfirsich auf Yourstage — prüfen"
@@ -1981,7 +1981,7 @@
     "name": "Theaterkurse – theaterpaedagogik.ch",
     "url": "https://www.theaterpaedagogik.ch/kurs/kurse.php",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -1990,7 +1990,7 @@
     "name": "Theaterstudio Golda Eppstein",
     "url": "https://www.eppstein.ch/",
     "bookmarkCategory": "Theater",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -2081,7 +2081,7 @@
     "name": "Apnea Total – Freediving Koh Tao",
     "url": "https://www.apneatotal.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Freediving-Schule Koh Tao — geografisch irrelevant"
@@ -2091,7 +2091,7 @@
     "name": "Bielerseefreaks – Windsurfer",
     "url": "https://bielerseefreaks.ch/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Windsport-Infosite, kein Eventkalender"
@@ -2119,7 +2119,7 @@
     "name": "Foiling School – Wing & Foil Kurse",
     "url": "https://foiling-school.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Wing & Foil Kurse — Struktur prüfen"
@@ -2129,7 +2129,7 @@
     "name": "Hällefors Vandrarhem & Kanotcenter",
     "url": "https://www.halleforsvandrarhem.com/en/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kanu-Camp Schweden — kein Eventkalender"
@@ -2139,7 +2139,7 @@
     "name": "Camping Le Maior – Kite",
     "url": "https://www.campinglemaior.it/de/kite/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Unterkunft Sardinien — kein Eventkalender"
@@ -2149,7 +2149,7 @@
     "name": "Kiteschule Gardasee – Kitesurf Adventure",
     "url": "https://www.gardasee-kiteschule.de/de",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Schule Gardasee — nur Buchungen, kein Kalender"
@@ -2168,7 +2168,7 @@
     "name": "Kitesurf Lake Garda – Courses",
     "url": "https://www.kitecentergardalake.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Schule Gardasee — nur Buchungen"
@@ -2178,7 +2178,7 @@
     "name": "Free Your Mind Kiteschool Tarifa",
     "url": "https://freeyourmindexperience.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Schule Tarifa — nur Buchungen"
@@ -2224,7 +2224,7 @@
     "name": "Sicily Kite Holiday",
     "url": "https://www.sicilykiteholiday.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Unterkunft Sizilien — keine Events"
@@ -2243,7 +2243,7 @@
     "name": "WaveRocker Surfcamp",
     "url": "https://www.waverocker.org/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Surfcamp — keine strukturierten Events"
@@ -2280,7 +2280,7 @@
     "name": "Yacht Club Bielersee",
     "url": "https://www.ycb.ch/clubdesk/www",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Yacht Club Bielersee — kein öffentlicher Eventkalender"
@@ -2317,7 +2317,7 @@
     "name": "Windsurfing Urnersee – Wing Foil Kurse",
     "url": "https://windsurfing-urnersee.ch/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "no-event-relevance",
     "notes": "Wing Foil Kurse Urnersee — Struktur prüfen"
@@ -2327,7 +2327,7 @@
     "name": "Surfclub Uri",
     "url": "https://surfclub-uri.ch/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -2336,7 +2336,7 @@
     "name": "Bootshafen Sisikon BHS",
     "url": "https://www.bhs.swiss/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -2363,7 +2363,7 @@
     "name": "Dr.Wind – Wingfoil Sao Miguel do Gostoso",
     "url": "https://www.drwind.surf/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Schule Brasilien — geografisch irrelevant"
@@ -2373,7 +2373,7 @@
     "name": "Kitefun – Kite-Shuttle Urnersee & Comersee",
     "url": "https://www.kitefun.ch/kiteshuttle/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "no-event-relevance"
   },
@@ -2382,7 +2382,7 @@
     "name": "Swiss Foiling School – Kurse Sisikon",
     "url": "https://foilingschool.swiss21-commerce.org/ki/Kurse-Sisikon.html",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -2392,7 +2392,7 @@
     "name": "Foiling Camps",
     "url": "https://foilingcamps.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "manual",
     "status": "pending",
     "notes": "2026-05-24: Container-Event aus manual-events.json entfernt; Aggregator mit vielen Camps weltweit. Echter Scraper sinnvoll statt Pseudo-Event."
@@ -2402,7 +2402,7 @@
     "name": "Luxury Wingfoiling Holidays",
     "url": "https://www.planetwingfoilholidays.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "scraper",
     "status": "pending",
     "notes": "Internationale Wingfoil-Holidays — Struktur prüfen"
@@ -2412,7 +2412,7 @@
     "name": "Kitesurf Mindoro – Outdoor Resort",
     "url": "https://www.kitesurf-mindoro.com/",
     "bookmarkCategory": "Wassersport",
-    "dashboardCategory": "wassersport",
+    "dashboardCategory": "sport",
     "type": "none",
     "status": "no-event-relevance",
     "notes": "Kite-Resort Philippinen — geografisch irrelevant"
@@ -2441,7 +2441,7 @@
     "name": "Engadiner Kantorei – Chorwoche 2026",
     "url": "https://engadinerkantorei.ch/chorwoche/",
     "bookmarkCategory": "Sonstiges",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "manual",
     "status": "draft",
     "notes": "2026-05-24: Status auf Entwurf gesetzt — manuell gepflegt, Drift-Risiko (Datum/Ort kann veralten). Anlass erscheint nicht im Dashboard bis Scraper/API gebaut ist. Daten bleiben in data/manual-events.json als Backup."
@@ -2469,7 +2469,7 @@
     "name": "Loire Music – Workshops France & UK",
     "url": "https://www.loiremusic.com/",
     "bookmarkCategory": "Sonstiges",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "pending"
   },
@@ -2497,7 +2497,7 @@
     "name": "DanceApp.ch – Tanz-Events Schweiz",
     "url": "https://danceapp.ch/events.php",
     "bookmarkCategory": "Tanzen-Schweiz",
-    "dashboardCategory": "tanz-buehne",
+    "dashboardCategory": "tanz",
     "type": "scraper",
     "status": "active",
     "notes": "Aktiver Scraper (scrapeDanceApp) — SSR, .event-card-link, 146 Events gesamt"

@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { scrapers } from '../scrapers'
 import sources from '../data/sources.json'
+import { CATEGORY_IDS } from '../lib/types'
 
 describe('scrapers ↔ sources.json consistency', () => {
   test('every active scraper-type source has a matching scraper-code id', () => {
@@ -35,10 +36,7 @@ describe('scrapers ↔ sources.json consistency', () => {
   })
 
   test('every scraper has a valid category', () => {
-    const validCategories = new Set([
-      'ausgehen', 'sozialleben', 'tanz-buehne', 'festivals-konferenzen',
-      'retreats', 'austausch', 'wassersport', 'sport',
-    ])
+    const validCategories = new Set<string>(CATEGORY_IDS)
     const invalid = scrapers.filter((s) => !validCategories.has(s.category))
     expect(invalid).toEqual([])
   })

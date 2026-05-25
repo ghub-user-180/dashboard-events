@@ -49,7 +49,7 @@ async function fetchLumaEvents(): Promise<RawEvent[]> {
 export const lumaScraper: Scraper = {
   id: 'luma',
   name: 'Luma',
-  category: 'sozialleben',
+  category: 'begegnungen',
   country: 'CH',  // Suche ist auf 50 km um Bern beschränkt
   run: fetchLumaEvents,
 }

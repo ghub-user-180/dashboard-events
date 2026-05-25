@@ -83,7 +83,7 @@ function decodeHtmlEntities(str: string): string {
 export const bitvocationScraper: Scraper = {
   id: 'bitvocation',
   name: 'Bitvocation.com',
-  category: 'festivals-konferenzen',
+  category: 'konferenzen',
   // kein country-Default: bitvocation ist international, jeder Event bringt sein Land
   run: scrapeBitvocation,
 }

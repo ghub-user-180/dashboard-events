@@ -19,26 +19,35 @@ export function CategoryChips({ counts }: Props) {
     return v ? v.split(',').filter(Boolean) : []
   })()
 
-  const toggle = (value: string) => {
-    const next = selected.includes(value)
-      ? selected.filter((v) => v !== value)
-      : [...selected, value]
-    const newParams = new URLSearchParams(params.toString())
-    if (next.length) newParams.set('cat', next.join(','))
-    else newParams.delete('cat')
+  // Live aus dem Browser, damit zwei schnelle Klicks während einer pending
+  // Transition nicht beide auf dem gleichen veralteten Snapshot operieren.
+  const currentParams = (): URLSearchParams =>
+    typeof window !== 'undefined'
+      ? new URLSearchParams(window.location.search)
+      : new URLSearchParams(params.toString())
+
+  const writeParams = (newParams: URLSearchParams) => {
     const qs = newParams.toString()
     startTransition(() => {
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     })
   }
 
+  const toggle = (value: string) => {
+    const newParams = currentParams()
+    const current = (newParams.get('cat')?.split(',').filter(Boolean)) ?? []
+    const next = current.includes(value)
+      ? current.filter((v) => v !== value)
+      : [...current, value]
+    if (next.length) newParams.set('cat', next.join(','))
+    else newParams.delete('cat')
+    writeParams(newParams)
+  }
+
   const reset = () => {
-    const newParams = new URLSearchParams(params.toString())
+    const newParams = currentParams()
     newParams.delete('cat')
-    const qs = newParams.toString()
-    startTransition(() => {
-      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
-    })
+    writeParams(newParams)
   }
 
   const totalCount = Object.values(counts).reduce((a, b) => a + b, 0)
@@ -57,8 +66,8 @@ export function CategoryChips({ counts }: Props) {
       </button>
       {CATEGORIES.map((cat) => {
         const count = counts[cat.id] ?? 0
-        if (count === 0 && !selected.includes(cat.id)) return null
         const isActive = selected.includes(cat.id)
+        const isEmpty = count === 0 && !isActive
         return (
           <button
             key={cat.id}
@@ -66,7 +75,9 @@ export function CategoryChips({ counts }: Props) {
             className={`text-xs px-3 py-1 rounded-full border transition ${
               isActive
                 ? 'bg-gray-900 text-white border-gray-900'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                : isEmpty
+                  ? 'bg-white text-gray-400 border-gray-200 hover:border-gray-400'
+                  : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
             }`}
           >
             {cat.icon} {cat.label}

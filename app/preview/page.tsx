@@ -49,26 +49,25 @@ function VariantTab({ id, label, current }: { id: string; label: string; current
 // ── Helper: Kategorie-Farbe ─────────────────────────────────────────────────
 
 const CAT_COLOR: Record<string, string> = {
-  ausgehen: 'bg-rose-100 text-rose-700',
-  sozialleben: 'bg-emerald-100 text-emerald-700',
-  'tanz-buehne': 'bg-fuchsia-100 text-fuchsia-700',
-  'festivals-konferenzen': 'bg-amber-100 text-amber-700',
-  retreats: 'bg-teal-100 text-teal-700',
-  austausch: 'bg-lime-100 text-lime-700',
-  wassersport: 'bg-sky-100 text-sky-700',
-  sport: 'bg-stone-200 text-stone-700',
+  'buehne-konzerte': 'bg-rose-100 text-rose-700',
+  tanz: 'bg-fuchsia-100 text-fuchsia-700',
+  'singles-dating': 'bg-pink-100 text-pink-700',
+  begegnungen: 'bg-emerald-100 text-emerald-700',
+  sport: 'bg-sky-100 text-sky-700',
+  konferenzen: 'bg-amber-100 text-amber-700',
+  festivals: 'bg-orange-100 text-orange-700',
+  'retreats-austausch': 'bg-teal-100 text-teal-700',
 }
 
-// Kurze Labels für die Tag-Anzeige — Vollform steht im Tooltip
 const CAT_SHORT_LABEL: Record<string, string> = {
-  ausgehen: 'Ausgehen',
-  sozialleben: 'Sozial',
-  'tanz-buehne': 'Tanz',
-  'festivals-konferenzen': 'Festivals',
-  retreats: 'Retreats',
-  austausch: 'Austausch',
-  wassersport: 'Wasser',
+  'buehne-konzerte': 'Bühne',
+  tanz: 'Tanz',
+  'singles-dating': 'Dating',
+  begegnungen: 'Begegnung',
   sport: 'Sport',
+  konferenzen: 'Konferenz',
+  festivals: 'Festival',
+  'retreats-austausch': 'Retreat',
 }
 
 function CatTag({ category }: { category: string }) {
