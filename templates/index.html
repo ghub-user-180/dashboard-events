@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Events</h1>
+    <div class="meta">
+      <label class="show-ignored"><input type="checkbox" id="show-favorites"> Nur Favoriten</label>
+      <label class="show-ignored"><input type="checkbox" id="show-ignored"> Ignorierte anzeigen</label>
+      <span id="status">Lade …</span>
+      <button id="to-bottom" type="button" class="nav-jump" title="ans Seitenende springen">↓ Nach unten</button>
+      <button id="refresh" type="button">Aktualisieren</button>
+    </div>
+  </header>
+  <main>
+    <div id="health-banner" class="health-banner" hidden></div>
+    <div id="filter-bar" class="filter-bar"></div>
+    <table id="events-table">
+      <thead>
+        <tr>
+          <th data-col="start_date">Datum</th>
+          <th data-col="title">Titel</th>
+          <th data-col="description">Beschreibung</th>
+          <th data-col="venue">Lokalität</th>
+          <th data-col="city">Ort</th>
+          <th data-col="country_label">Land</th>
+          <th data-col="state" class="state-col">★</th>
+        </tr>
+      </thead>
+      <tbody id="events-body"></tbody>
+    </table>
+    <p id="empty" hidden>Noch keine Events. Klicke «Aktualisieren».</p>
+    <section id="sources" class="sources" hidden>
+      <h2>Quellen</h2>
+      <p id="sources-overview" class="sources-overview"></p>
+      <div class="source-controls">
+        <button type="button" class="src-control" data-action="all">Alle</button>
+        <button type="button" class="src-control" data-action="none">Keine</button>
+      </div>
+      <ul id="sources-list"></ul>
+    </section>
+    <button id="to-top" type="button" class="to-top">↑ Nach oben</button>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

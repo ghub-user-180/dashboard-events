@@ -1,29 +1,13 @@
-# dependencies
-node_modules/
-.pnp
-.pnp.js
+# Python
+.venv/
+__pycache__/
+*.pyc
 
-# next.js
-.next/
-out/
+# OS / Editor
+.DS_Store
 
-# env files
-.env.local
-.env.*.local
+# Lokaler Scrape-Cache (regenerierbar)
+data/events.json
 
-# debug
-npm-debug.log*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# workspace-doku (lebt im Workspace, nicht im Code-Repo)
-events_doku.md
-_archiv/
-
-# temporäre CSV-Exports zum Kuratieren der Quellen
-sources-export*.csv
+# Debug-Screenshots (Iterations-Material, nicht Projekt-Artefakt)
+Screenshot*.png

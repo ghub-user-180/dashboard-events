@@ -1,13 +1,8 @@
 name: Scrape Events
 
-# Projekt verworfen (2026-05-25) — automatischer Cron deaktiviert.
-# Reaktivierung: die zwei `schedule:`-Zeilen unten einkommentieren und committen.
-# `workflow_dispatch` bleibt aktiv, damit der Scraper bei Bedarf manuell via
-# GitHub UI oder `gh workflow run scrape.yml` testbar bleibt.
-
 on:
-  # schedule:
-  #   - cron: '0 5 */3 * *'   # alle 3 Tage, 05:00 UTC = 06:00/07:00 Schweizer Zeit
+  schedule:
+    - cron: '0 5 */3 * *'   # alle 3 Tage, 05:00 UTC = 06:00/07:00 Schweizer Zeit
   workflow_dispatch:        # manuell auslösbar via GitHub UI
 
 jobs:

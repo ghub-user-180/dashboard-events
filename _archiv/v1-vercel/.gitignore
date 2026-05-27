@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+
+# env files
+.env.local
+.env.*.local
+
+# debug
+npm-debug.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# workspace-doku (lebt im Workspace, nicht im Code-Repo)
+events_doku.md
+_archiv/
+
+# temporäre CSV-Exports zum Kuratieren der Quellen
+sources-export*.csv
