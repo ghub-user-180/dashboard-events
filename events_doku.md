@@ -114,11 +114,13 @@ Sources.json-Status nach Migration: **8 active · 49 pending · 8 manuell · 200
 ## Erweiterungen über Lastenheft hinaus
 
 - **«Interessiert» / «Ignoriert»-Markierung** pro Event mit server-seitigem Storage in `event_states.json`. Click-Cycle —/★/✕ pro Zeile.
-- **«Nur Favoriten» / «Ignorierte anzeigen»** Toggle-Filter im Header.
-- **Multi-Select** für alle 6 Filter-Dimensionen.
+- **Filter-Pill-Reihe** (7 Pills) für alle Filter-Dimensionen: Datum, Kategorie, Dauer, Quelle, Stadt, Land, Kontinent. Plus zwei Toggle-Pills «Nur Favoriten» / «Ignorierte» und «Filter zurücksetzen»-Button. Konsistente Bedienung, kein Mix verschiedener Control-Stile.
+- **Multi-Select** für alle Filter-Pills. Mehrere Werte parallel selektierbar, Counts respektieren andere aktive Filter.
 - **«nur»-Button** pro Filter-Option (Single-Select Shortcut, setzt diese Option als einzige aktive).
-- **Quellen-Toggles** im Footer mit LocalStorage-Persistenz, inkl. «Alle» / «Keine» / pro-Quelle-«nur».
+- **Quelle als Filter-Pill** statt Footer-Toggle-Liste — skaliert für viele Quellen mit Such-Input im Dropdown.
+- **Diagnose-Block** im Footer zeigt nur noch Quellen mit Problemen (stale, verworfen). Bei allem ok: «Alle aktiven Quellen liefern sauber.» Übersicht-Counts (`X aktiv · Y pending · …`) bleiben.
 - **Source-Health-Warnung** als gelber Banner wenn eine Quelle > 7 Tage stumm.
+- **Inline-Kategorie-Badge** vor jedem Eventtitel (farbig, kurzer Label «Bühne», «Tanz», «Leute», «Sport», «Konferenz», «Festival», «Retreat»). Hover zeigt vollen Label.
 - **Datums-Filter** präzise Zeiträume: Heute, Morgen, Diese Woche, Nächste Woche, Nächste 7 Tage, Nächste 3 Monate, Dieses Jahr, Nächstes Jahr.
 - **Dauer-Klassifikation** mit Abend-Heuristik: Events ab 18:00 sind «kurz» unabhängig von Total-Dauer (Konzerte 20:00–02:00 sind keine «eintaegig»-Anlässe).
 - **Sortierbare Spaltenköpfe** (asc/desc, Pfeil-Indikator).
@@ -152,10 +154,12 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 - [ ] 2026-05-27: **Cross-Source-Duplikate.** Falls ein Festival auf zwei aktiven Quellen gelistet wird, taucht es 2× auf. Aktuell akzeptiert; wenn nervt: Fuzzy-Match auf Titel+Datum+Stadt.
 - [ ] 2026-05-27: **ICS-Export pro Event.** v1-Backlog OFF-1, «zur Kalender hinzufügen».
 - [ ] 2026-05-27: **Pattern-Ignorieren.** Aktuell nur Per-Event-Ignorieren. Falls Klick-Müdigkeit aufkommt: Regel-System mit Title-Substring etc.
+- [ ] 2026-05-27: **Quellen-Dropdown-Suche debuggen.** Such-Input im Quellen-Pill-Dropdown reagiert beim Tippen nicht — typing in das `<input class="filter-search-input">` löst keine sichtbare Filterung der `<li data-value>` aus. Listener ist direkt aufs Element gebunden (`bar.querySelectorAll(".filter-search-input").forEach(input => input.addEventListener("input", …))`); Ursache offen. Erste Schritte: Browser-Konsole auf JS-Fehler prüfen, dann ob `document.querySelectorAll('.filter-search-input').length` 1 zurückgibt und der `input`-Event-Listener feuert.
 - [ ] 2026-05-27: **Online-Stellung.** Path nach oben offen — Scraper auf Cron/CI laufen lassen, HTML deployen, Auth dazu. Nicht jetzt, aber im Auge behalten.
 
 ## Historie
 
+- 2026-05-27 (UI-Schliff nach v2-Push): Inline-Kategorie-Badge vor jedem Titel (farbiges Pill mit Kurz-Label). «Nur Favoriten» / «Ignorierte» aus den Header-Checkboxen in Toggle-Pills neben den Filter-Pills überführt. Quellen-Toggle-Liste im Footer aufgelöst und als 7. Filter-Pill «Quelle» mit Such-Input integriert; Diagnose-Block unten schrumpft auf «nur Probleme»-Anzeige. v1 GitHub-Repo aufgeräumt: alter CI-Commit per force-push ersetzt (e8e86dc → e420603), v1-`package-lock.json` aus dem Archiv entfernt um Dependabot-Lärm zu stoppen.
 - 2026-05-27: v2-Neuaufbau gestartet. v1-Code in `_archiv/v1-vercel/` verschoben, Lastenheft als `lastenheft.md` aus Git extrahiert. Neuer Stack: Python 3 + Flask + statisches HTML/JS, lokal auf `127.0.0.1:5050`. 8 Scraper portiert (schuur, jazzkantine, kulturhof, vbg, ecstaticdancebern, bitvocation, barhopping, campfi) über 5 Kategorien (buehne-konzerte 3×, tanz-bewegung 1×, kennenlernen 1×, konferenzen 1×, retreats-austausch 2×). 7-Kategorien-Schema (`tanz-bewegung`, `kennenlernen` als Merges aus v1-8er-Schema). Filter-UI mit Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) inkl. Multi-Select, dynamischer Counts, «nur»-Shortcut, Reset-Button. Per-Event-«Interessiert»/«Ignoriert»-Markierung mit Server-Storage. Stale-Schutz + Schema-Validation + Source-Health greifen ab Start. Dauer-Klassifikation mit Abend-Heuristik (Start ≥ 18:00 → kurz, unabhängig von Total-Dauer). Datums-Filter mit präzisen Range-Berechnungen, lokale (nicht UTC) Datums-Strings. Land-Spalte zeigt deutschen Ländernamen statt ISO-Code. v1-Doku-Inhalt durch v2-Doku ersetzt; Verwerfungs-Blockquote entfernt.
 
 ## Verwandte Dokumentation
