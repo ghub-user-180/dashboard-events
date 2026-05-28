@@ -14,7 +14,9 @@ let SHOW_FAVORITES = false;
 let STATES = {};
 let CURRENT_PAYLOAD = null;
 let SORT = { col: "start_date", dir: "asc" };
+let PRESETS = [];
 const FILTERS = { date: [], category: [], duration: [], source: [], city: [], country: [], continent: [] };
+const PRESET_FILTER_KEYS = ["date", "category", "duration", "source", "city", "country", "continent"];
 
 const DATE_OPTIONS = [
   { value: "all", label: "Alle" },
@@ -103,6 +105,89 @@ function countForOption(key, value) {
     if (eventInOption(e, key, value)) n++;
   }
   return n;
+}
+
+function currentFilterSignature() {
+  const f = {};
+  for (const k of PRESET_FILTER_KEYS) f[k] = FILTERS[k].slice().sort();
+  return JSON.stringify({
+    filters: f,
+    toggles: { favorites: SHOW_FAVORITES, ignored: SHOW_IGNORED },
+  });
+}
+
+function presetSignature(preset) {
+  const f = {};
+  for (const k of PRESET_FILTER_KEYS) f[k] = (preset.filters?.[k] || []).slice().sort();
+  return JSON.stringify({
+    filters: f,
+    toggles: {
+      favorites: !!preset.toggles?.favorites,
+      ignored: !!preset.toggles?.ignored,
+    },
+  });
+}
+
+function anyFilterActive() {
+  return Object.values(FILTERS).some((v) => v.length > 0) || SHOW_FAVORITES || SHOW_IGNORED;
+}
+
+function applyPreset(preset) {
+  for (const k of PRESET_FILTER_KEYS) FILTERS[k] = (preset.filters?.[k] || []).slice();
+  SHOW_FAVORITES = !!preset.toggles?.favorites;
+  SHOW_IGNORED = !!preset.toggles?.ignored;
+  if (CURRENT_PAYLOAD) render(CURRENT_PAYLOAD);
+}
+
+async function savePreset() {
+  const name = (window.prompt("Name für dieses Filter-Set:") || "").trim();
+  if (!name) return;
+  if (name.length > 50) { alert("Name max. 50 Zeichen."); return; }
+  const filters = {};
+  for (const k of PRESET_FILTER_KEYS) filters[k] = FILTERS[k].slice();
+  const body = {
+    filters,
+    toggles: { favorites: SHOW_FAVORITES, ignored: SHOW_IGNORED },
+  };
+  const res = await fetch(`/api/filter-presets/${encodeURIComponent(name)}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) { alert("Speichern fehlgeschlagen."); return; }
+  const saved = await res.json();
+  PRESETS = [...PRESETS.filter((p) => p.name !== saved.name), saved]
+    .sort((a, b) => a.name.localeCompare(b.name));
+  renderPresetBar();
+}
+
+async function deletePreset(name) {
+  if (!window.confirm(`Preset «${name}» löschen?`)) return;
+  const res = await fetch(`/api/filter-presets/${encodeURIComponent(name)}`, { method: "DELETE" });
+  if (!res.ok) { alert("Löschen fehlgeschlagen."); return; }
+  PRESETS = PRESETS.filter((p) => p.name !== name);
+  renderPresetBar();
+}
+
+function renderPresetBar() {
+  const bar = document.getElementById("preset-bar");
+  if (!bar) return;
+  const hasPresets = PRESETS.length > 0;
+  const canSave = anyFilterActive();
+  if (!hasPresets && !canSave) { bar.hidden = true; bar.innerHTML = ""; return; }
+  bar.hidden = false;
+  const activeSig = currentFilterSignature();
+  const pills = PRESETS.map((p) => {
+    const isActive = presetSignature(p) === activeSig;
+    return `<button type="button" class="preset-pill${isActive ? " preset-pill-active" : ""}" data-preset="${escapeHtml(p.name)}">`
+      + `<span class="preset-pill-label">${escapeHtml(p.name)}</span>`
+      + `<span class="preset-pill-del" data-del="${escapeHtml(p.name)}" title="Preset löschen" aria-label="Preset löschen">✕</span>`
+      + `</button>`;
+  }).join("");
+  const saveBtn = canSave
+    ? `<button type="button" class="preset-save">+ Aktuelle Filter speichern…</button>`
+    : "";
+  bar.innerHTML = pills + saveBtn;
 }
 
 function renderFilterBar() {
@@ -221,6 +306,16 @@ function renderFilterBar() {
 
 document.addEventListener("click", (event) => {
   if (event.target.closest(".filter-search-item")) return;
+  const delPill = event.target.closest(".preset-pill-del");
+  if (delPill) { event.stopPropagation(); deletePreset(delPill.dataset.del); return; }
+  const presetPill = event.target.closest(".preset-pill");
+  if (presetPill) {
+    const name = presetPill.dataset.preset;
+    const preset = PRESETS.find((p) => p.name === name);
+    if (preset) applyPreset(preset);
+    return;
+  }
+  if (event.target.closest(".preset-save")) { savePreset(); return; }
   const more = event.target.closest(".filter-more");
   if (more) {
     const bar = document.getElementById("filter-bar");
@@ -453,6 +548,15 @@ function render(payload) {
     const addressTitle = e.address ? ` title="${escapeHtml(e.address)}"` : "";
     const titleTooltip = e.description ? ` title="${escapeHtml(e.description)}"` : "";
     const descMarker = e.description ? ' <span class="desc-marker" aria-hidden="true">ⓘ</span>' : "";
+    const icsLink = ` <a class="ics-link" href="/api/event/${encodeURIComponent(e.id)}.ics" title="In Kalender (.ics)" aria-label="Zum Kalender hinzufügen" download>`
+      + `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">`
+      + `<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>`
+      + `<line x1="16" y1="2" x2="16" y2="6"/>`
+      + `<line x1="8" y1="2" x2="8" y2="6"/>`
+      + `<line x1="3" y1="10" x2="21" y2="10"/>`
+      + `<line x1="12" y1="14" x2="12" y2="18"/>`
+      + `<line x1="10" y1="16" x2="14" y2="16"/>`
+      + `</svg></a>`;
     const timeStr = formatTime(e.start_time, e.end_time);
     const timeSub = timeStr ? `<div class="time-sub">${escapeHtml(timeStr)}</div>` : "";
     const catShort = e.category ? (categoryShorts[e.category] || e.category) : "";
@@ -461,7 +565,7 @@ function render(payload) {
       : '<span class="dash">—</span>';
     tr.innerHTML = `
       <td class="col-date">${formatDate(e.start_date)}${timeSub}</td>
-      <td class="col-title"${titleTooltip}><a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(e.title)}</a>${descMarker}</td>
+      <td class="col-title"${titleTooltip}><a href="${escapeHtml(e.url)}" target="_blank" rel="noopener">${escapeHtml(e.title)}</a>${descMarker}${icsLink}</td>
       <td class="col-category">${catBadge}</td>
       <td class="col-venue"${addressTitle}>${emptyDash(e.venue)}</td>
       <td class="col-city">${emptyDash(e.city)}</td>
@@ -474,6 +578,7 @@ function render(payload) {
   renderHealth(payload.health_warnings);
   renderSources(payload.sources, categoryLabels, payload.sources_overview);
   renderFilterBar();
+  renderPresetBar();
   updateSortIndicators();
 }
 
@@ -535,6 +640,7 @@ async function refresh() {
   try {
     const res = await fetch("/api/refresh", { method: "POST" });
     const payload = await res.json();
+    if (Array.isArray(payload.filter_presets)) PRESETS = payload.filter_presets;
     render(payload);
   } catch (err) {
     STATUS.textContent = `Fehler: ${err.message}`;
@@ -548,6 +654,7 @@ REFRESH_BTN.addEventListener("click", refresh);
 
 (async () => {
   const payload = await loadEvents();
+  if (Array.isArray(payload.filter_presets)) PRESETS = payload.filter_presets;
   render(payload);
   const last = payload.scraped_at ? Date.parse(payload.scraped_at) : 0;
   if (!last || Date.now() - last > STALE_AFTER_MS) {

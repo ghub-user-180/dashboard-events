@@ -15,17 +15,22 @@ import scrapers
 from categories import CATEGORIES
 from event_schema import validate_event
 from geo import continent_for, country_name_for
+from ics import build_vcalendar, filename_for
 
 ROOT = Path(__file__).parent
 DATA_FILE = ROOT / "data" / "events.json"
 SOURCES_FILE = ROOT / "data" / "sources.json"
 STATES_FILE = ROOT / "data" / "event_states.json"
+PRESETS_FILE = ROOT / "data" / "filter_presets.json"
 HOST = "127.0.0.1"
 PORT = 5050
 
 KURZ_MAX_HOURS = 3.5
 SOURCE_HEALTH_WARN_DAYS = 7
 VALID_STATES = {"interessiert", "ignoriert"}
+PRESET_FILTER_KEYS = {"date", "category", "duration", "source", "city", "country", "continent"}
+PRESET_TOGGLE_KEYS = {"favorites", "ignored"}
+PRESET_NAME_MAX = 50
 
 app = Flask(__name__)
 
@@ -132,6 +137,38 @@ def _write_states(states: dict[str, str]) -> None:
     )
 
 
+def _read_presets() -> list[dict[str, Any]]:
+    if not PRESETS_FILE.exists():
+        return []
+    raw = json.loads(PRESETS_FILE.read_text(encoding="utf-8"))
+    return raw if isinstance(raw, list) else []
+
+
+def _write_presets(presets: list[dict[str, Any]]) -> None:
+    PRESETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PRESETS_FILE.write_text(
+        json.dumps(presets, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
+def _normalize_preset_payload(body: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
+    filters_in = body.get("filters") or {}
+    toggles_in = body.get("toggles") or {}
+    if not isinstance(filters_in, dict) or not isinstance(toggles_in, dict):
+        return None, "filters/toggles must be objects"
+    filters: dict[str, list[str]] = {}
+    for k in PRESET_FILTER_KEYS:
+        value = filters_in.get(k, [])
+        if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+            return None, f"filters.{k} must be a list of strings"
+        filters[k] = value
+    toggles: dict[str, bool] = {}
+    for k in PRESET_TOGGLE_KEYS:
+        toggles[k] = bool(toggles_in.get(k, False))
+    return {"filters": filters, "toggles": toggles}, None
+
+
 def _annual_source_ids() -> set[str]:
     """IDs von Quellen mit ~1 Event/Jahr (sources.json: `annual: true`).
 
@@ -193,6 +230,7 @@ def _serve(payload: dict[str, Any]) -> dict[str, Any]:
         "sources_overview": _sources_overview(),
         "states": _read_states(),
         "health_warnings": _health_warnings(payload.get("sources", [])),
+        "filter_presets": _read_presets(),
     }
 
 
@@ -314,6 +352,19 @@ def api_refresh():
     return jsonify(_serve(_run_all_scrapers()))
 
 
+@app.get("/api/event/<event_id>.ics")
+def api_event_ics(event_id: str):
+    payload = _read_cache_raw()
+    event = next((e for e in payload.get("events", []) if e.get("id") == event_id), None)
+    if event is None:
+        return jsonify({"error": "event not found"}), 404
+    body = build_vcalendar(event)
+    return body, 200, {
+        "Content-Type": "text/calendar; charset=utf-8",
+        "Content-Disposition": f'attachment; filename="{filename_for(event)}"',
+    }
+
+
 @app.post("/api/state")
 def api_state():
     body = request.get_json(silent=True) or {}
@@ -331,6 +382,39 @@ def api_state():
         states[event_id] = state
     _write_states(states)
     return jsonify({"id": event_id, "state": state})
+
+
+@app.get("/api/filter-presets")
+def api_filter_presets_list():
+    return jsonify({"presets": _read_presets()})
+
+
+@app.put("/api/filter-presets/<path:name>")
+def api_filter_presets_upsert(name: str):
+    name = name.strip()
+    if not name or len(name) > PRESET_NAME_MAX:
+        return jsonify({"error": f"name required, max {PRESET_NAME_MAX} chars"}), 400
+    body = request.get_json(silent=True) or {}
+    normalized, err = _normalize_preset_payload(body)
+    if err:
+        return jsonify({"error": err}), 400
+    presets = _read_presets()
+    presets = [p for p in presets if p.get("name") != name]
+    presets.append({"name": name, **normalized})
+    presets.sort(key=lambda p: p.get("name", "").lower())
+    _write_presets(presets)
+    return jsonify({"name": name, **normalized})
+
+
+@app.delete("/api/filter-presets/<path:name>")
+def api_filter_presets_delete(name: str):
+    name = name.strip()
+    presets = _read_presets()
+    new_presets = [p for p in presets if p.get("name") != name]
+    if len(new_presets) == len(presets):
+        return jsonify({"error": "preset not found"}), 404
+    _write_presets(new_presets)
+    return jsonify({"name": name, "deleted": True})
 
 
 def _open_browser() -> None:

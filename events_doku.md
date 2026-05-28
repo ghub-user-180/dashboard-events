@@ -28,6 +28,7 @@ Events/
 ├── categories.py           # 7 Kategorien (single source of truth)
 ├── geo.py                  # ISO-2 → Kontinent + deutscher Name + normalize
 ├── event_schema.py         # Manuelle Validation gegen Scraper-Output
+├── ics.py                  # RFC-5545 VCALENDAR/VEVENT-Builder (Export pro Event)
 ├── scrapers/
 │   ├── __init__.py         # SCRAPERS Registry
 │   ├── _utils.py           # HEADERS, url_hash, sanitize_city, extract_venue_and_city
@@ -44,7 +45,8 @@ Events/
 ├── data/
 │   ├── sources.json        # 265 Quellen mit Status-Lifecycle
 │   ├── events.json         # Cache, von _run_all_scrapers geschrieben
-│   └── event_states.json   # Interessiert/Ignoriert pro Event-ID (server-seitig)
+│   ├── event_states.json   # Interessiert/Ignoriert pro Event-ID (server-seitig)
+│   └── filter_presets.json # Benannte Filter-Kombinationen (server-seitig)
 ├── scripts/inspect_*.py    # Diagnose-Scripts pro Quelle, manuell auf Mac ausführbar
 ├── start.command           # Doppelklick: venv + Server + Browser
 └── requirements.txt        # flask, requests, beautifulsoup4
@@ -133,6 +135,8 @@ Sources.json-Status: **13 active · 44 pending · 8 manuell · 200 verworfen · 
 - **Quick-Scroll** «↑ Nach oben» (unten) und «↓ Nach unten» (oben).
 - **Beschreibungs-Spalte** mit Hover-Tooltip für lange Texte.
 - **Datum-Spalte** integriert die Uhrzeit als kleine Subtext-Zeile darunter.
+- **ICS-Export pro Event** — Lucide-Calendar-Plus-Icon neben dem Titel öffnet `.ics`-Download (Endpoint `/api/event/<id>.ics`, RFC-5545 in `ics.py`). Single-Day mit Floating-Local-Time, Multi-Day als VALUE=DATE all-day.
+- **Filter-Presets** — gespeicherte Filter-Kombinationen («Schweiz/Luzern/14d», «Berlin/Konzerte» …) als dezente Chip-Reihe über der Filterleiste. Server-seitiger Storage in `data/filter_presets.json`, Endpoints `GET/PUT/DELETE /api/filter-presets[/<name>]`. Klick auf Pill aktiviert Filter + Toggles, `✕` löscht. Aktuell aktiver Preset wird invertiert hervorgehoben. Sortierung bleibt orthogonal (nicht im Preset).
 
 ## Workflow: neue Quelle aktivieren
 
@@ -158,14 +162,15 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 - [ ] 2026-05-27: **VBG-Venue-Map erweitern.** Aktuell nur «Casa Moscia» → Ascona und «Campo Rasa» → Onsernone. Weitere VBG-Häuser bei Auftreten ergänzen in `scrapers/vbg.py:VBG_VENUE_CITY`.
 - [ ] 2026-05-27: **Parallele Scraper-Ausführung.** Aktuell sequenziell — bei 8 Quellen noch ok, ab ~12+ lohnt `concurrent.futures.ThreadPoolExecutor`.
 - [ ] 2026-05-27: **Cross-Source-Duplikate.** Falls ein Festival auf zwei aktiven Quellen gelistet wird, taucht es 2× auf. Aktuell akzeptiert; wenn nervt: Fuzzy-Match auf Titel+Datum+Stadt.
-- [ ] 2026-05-27: **ICS-Export pro Event.** v1-Backlog OFF-1, «zur Kalender hinzufügen».
 - [ ] 2026-05-27: **Pattern-Ignorieren.** Aktuell nur Per-Event-Ignorieren. Falls Klick-Müdigkeit aufkommt: Regel-System mit Title-Substring etc.
 - [ ] 2026-05-27: **Quellen-Dropdown-Suche debuggen.** Such-Input im Quellen-Pill-Dropdown reagiert beim Tippen nicht — typing in das `<input class="filter-search-input">` löst keine sichtbare Filterung der `<li data-value>` aus. Listener ist direkt aufs Element gebunden (`bar.querySelectorAll(".filter-search-input").forEach(input => input.addEventListener("input", …))`); Ursache offen. Erste Schritte: Browser-Konsole auf JS-Fehler prüfen, dann ob `document.querySelectorAll('.filter-search-input').length` 1 zurückgibt und der `input`-Event-Listener feuert.
 - [ ] 2026-05-27: **Online-Stellung.** Path nach oben offen — Scraper auf Cron/CI laufen lassen, HTML deployen, Auth dazu. Nicht jetzt, aber im Auge behalten.
 
 ## Historie
 
+- 2026-05-28: Filter-Presets. Gespeicherte Filter-Kombinationen mit Server-Storage (`data/filter_presets.json`), Endpoints `GET /api/filter-presets`, `PUT /api/filter-presets/<name>` (Upsert), `DELETE /api/filter-presets/<name>`. UI: dezente Chip-Reihe (`#preset-bar` über der Filterleiste), jede Pill = ein Preset, Klick aktiviert alle Filter + Toggles (Favoriten/Ignorierte) auf einen Schlag, `✕` löscht (mit `confirm`). Aktiver Preset wird invertiert (schwarz/cremig) hervorgehoben — Signatur-Match über sortierte Filter+Toggle-Werte. «+ Aktuelle Filter speichern…»-Button rechts (nur wenn aktive Filter vorhanden), Name via `prompt`, Max 50 Zeichen. Bei null Presets und null aktiven Filtern ist die Reihe komplett unsichtbar. Sortierung bleibt orthogonal (nicht im Preset gespeichert). Stichprobe gegen die Endpoints (Upsert, Update mit gleichem Namen, Validation, Delete, 404 auf Missing) bestätigt.
 - 2026-05-28: Jahres-Quellen-Unterstützung + sensualityfestival angebunden (`scrapers/sensualityfestival.py`, `scripts/inspect_sensualityfestival.py`). Neues `annual: true`-Flag in `sources.json` für Quellen mit ~1 Event/Jahr: `app.py:_annual_source_ids()` schliesst sie aus der Stale-/Health-Warnung aus und behandelt ein leeres Resultat (zwischen den Ausgaben) als ok statt als Diagnose-Problem (`stale: rejected > 0 or not is_annual`, Report-Feld `annual`). Erster Nutzer: sensualityfestival (Klasse 10, WordPress) — 1 Festival/Jahr, Termin nur als Fliesstext (`15-22 August, 2026`, dt./engl. Range-Parser mit Cross-Month-Reserve), kein konkreter Ort (nur Land CZ, Stadt None). ID `sensualityfestival-<jahr>`. Kategorie `konferenzen` → `festivals`. Kein Frontend-Change nötig (Diagnose-Filter `stale || rejected>0` greift weiterhin). Aktive Scraper 12 → 13, festivals 1 → 2. Weitere Jahres-Kandidaten pending: afuerafest, vrairepaire, libertycon, marchedescepages, danses-darc.
+- 2026-05-28: ICS-Export pro Event (Pendenz v1-Backlog OFF-1 erledigt). Neuer Endpoint `GET /api/event/<id>.ics` liefert RFC-5545-VCALENDAR mit einem VEVENT (`Content-Type: text/calendar; charset=utf-8`, `Content-Disposition: attachment` mit `<date>-<title-slug>.ics`-Dateiname). `ics.py` macht das Generieren: TEXT-Escaping für SUMMARY/DESCRIPTION/LOCATION (Backslash/Komma/Semikolon/Newline), 75-Octet-Line-Folding mit UTF-8-sicherem Split, DTSTART/DTEND als Floating-Local-Time mit Zeiten, sonst `VALUE=DATE` all-day mit exklusivem DTEND (letzter Tag + 1). DESCRIPTION kombiniert Event-Beschreibung + Quellen-Hinweis, LOCATION konkateniert Venue/Address/City, URL unangetastet. In der UI ein Lucide-Calendar-Plus-Icon (14px) als zweiter Glyph neben dem Titel, rechts vom `ⓘ`-Desc-Marker — dezent grau (#c4c4c0), Hover dunkel. `<a download>` triggert Direkt-Download; öffnet im Default-Kalender (Calendar.app, Outlook, GCal-Import via Datei). Stichprobe gegen Single-Day (DJ Robb 07:30–09:30) und Multi-Day (LarpCal Welcome 2024-12-09 bis 2024-12-31, all-day DTEND:20250101) bestätigt.
 - 2026-05-28: larpcal-Quelle angebunden (`scrapers/larpcal.py`, `scripts/inspect_larpcal.py`). Klasse 2 (öffentliche REST-API): larpcal.com ist eine React/Vite-SPA, Daten kommen aus `larpcal-tki9.onrender.com/events` (verlangt `Origin`-Header, CORS). 204 published Events international (Europa + Nordamerika), native `id`. API-Zeiten sind Platzhalter → `start_time`/`end_time` weggelassen; `city: "N/A"` → None; leere `eventUrl` → Detailseite `larpcal.com/events/<id>`; `UK` → `GB` (sonst keine Kontinent-Zuordnung). Kategorie bei Anbindung von `konferenzen` auf `festivals` korrigiert (LARP = Mehrtages-Events). Erste aktive Festivals-Quelle. Aktive Scraper 11 → 12, aktive Kategorien 5 → 6 (festivals 0 → 1).
 - 2026-05-28: SCI-Quelle angebunden (`scrapers/scich.py`, `scripts/inspect_scich.py`). Klasse 10 (Custom HTML): Schweizer Workcamps stehen inline in Divi-Textblöcken (`<h6>` Titel + `<p>` mit `Datum: … Ort: … Alter: …`), internationale Camps nutzen das Inline-Format nicht und liegen auf der externen `volunteer.sci.ngo`-DB — daher **scoped auf die 7 CH-Camps** (per Ort-Land CH gefiltert). Parser für dt. Datums-Range (`19. Juli bis 01. August 2026`, Startmonat optional, `\xa0`/Tippfehler toleriert) und Ort→Venue/Stadt-Trennung mit Kantons-/Land-Suffix-Drop. URL = Projekt-Link (`volunteer.sci.ngo/projects/NNNN`) bzw. Seiten-URL als Fallback. Source flipped pending → active. Aktive Scraper 10 → 11, retreats-austausch 3 → 4.
 - 2026-05-28: kiosk-Quelle angebunden (`scrapers/kioskiosk.py`, `scripts/inspect_kioskiosk.py`). Klasse 2 (öffentliche JSON/GraphQL-API): SvelteKit-Frontend mit leerem HTML, Events kommen aus Craft-CMS-GraphQL-API (`cms.kioskiosk.ch/api`, Bearer-Token im Client-Bundle). API-seitiger `eventDate >= heute`-Filter (kiosk-Events eintägig → deckungsgleich mit Server-Past-Filter). Keine Detailseiten im Frontend → `url` = externer Ticket-Link wenn vorhanden, sonst Startseite; native `slug` als ID statt URL-Hash. Aktive Scraper 9 → 10, buehne-konzerte 3 → 4.

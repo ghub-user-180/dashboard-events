@@ -9,5 +9,8 @@ __pycache__/
 # Lokaler Scrape-Cache (regenerierbar)
 data/events.json
 
+# Persönlicher User-State (server-seitig, single-user)
+data/filter_presets.json
+
 # Debug-Screenshots (Iterations-Material, nicht Projekt-Artefakt)
 Screenshot*.png
