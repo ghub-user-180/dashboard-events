@@ -1,4 +1,5 @@
 from . import (
+    afuerafest,
     barhopping,
     bitvocation,
     campfi,
@@ -28,4 +29,5 @@ SCRAPERS = [
     scich,
     larpcal,
     sensualityfestival,
+    afuerafest,
 ]

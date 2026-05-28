@@ -770,10 +770,11 @@
     "name": "AfueraFest",
     "url": "https://afuerafest.de/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "konferenzen",
+    "dashboardCategory": "festivals",
     "type": "scraper",
-    "status": "pending",
-    "notes": "Jährliches Festival DE — prüfen ob 2026 stattfindet"
+    "status": "active",
+    "notes": "2026-05-28: v2-Port aktiv (scrapers/afuerafest.py) — Klasse 10 (Custom HTML). Jahres-Quelle (annual=true): 1 Festival/Jahr auf festem Gelände (Gerlebogk/Könnern, DE), Termin nur als dt. Fliesstext. Kategorie konferenzen → festivals.",
+    "annual": true
   },
   {
     "id": "templeoflight",

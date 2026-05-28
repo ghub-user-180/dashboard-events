@@ -13,7 +13,7 @@ Persönliches lokales Manager-View für aggregierte Anlässe (Bühne, Tanz, Kenn
 
 v1 (Next.js/Vercel) wurde am 25.5.2026 als unzuverlässig verworfen. v2 startet auf einer schlankeren Basis: Python-Scripts statt Next.js, Flask-Server statt Vercel, lokal statt online — Pfad nach oben offen (Scraper-Funktionen sind plattform-neutral, HTML kann später statisch deployen).
 
-Aktuell **13 aktive Scraper** über 6 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
+Aktuell **14 aktive Scraper** über 6 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
 
 ## Links
 
@@ -83,8 +83,9 @@ Events/
 | scich | retreats-austausch | HTML Divi-Inline (Custom), dt. Datums-Range, scoped auf CH-Camps |
 | larpcal | festivals | REST-API (Render) hinter React/Vite-SPA, Origin-Header, native ID, international |
 | sensualityfestival | festivals | HTML (Custom), Jahres-Quelle (`annual`), Datum aus Fliesstext, nur Land |
+| afuerafest | festivals | HTML (Custom), Jahres-Quelle (`annual`), dt. Datums-Range, feste Location (Könnern DE) |
 
-Sources.json-Status: **13 active · 44 pending · 8 manuell · 200 verworfen · 265 total**.
+Sources.json-Status: **14 active · 43 pending · 8 manuell · 200 verworfen · 265 total**.
 
 ## Aus Lastenheft übernommen
 
@@ -168,6 +169,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Historie
 
+- 2026-05-28: afuerafest als zweite Jahres-Quelle angebunden (`scrapers/afuerafest.py`, `scripts/inspect_afuerafest.py`). Klasse 10 (Custom HTML), `annual: true`. 1 Festival/Jahr auf festem Gelände (Gerlebogk/Könnern, Sachsen-Anhalt DE) — Location hartkodiert (über Jahre stabil), nur der Termin wird aus dt. Fliesstext geparst (`24. bis 26. Juli 2026`, Parser wie scich). ID `afuerafest-<jahr>`, Kategorie `konferenzen` → `festivals`. Aktive Scraper 13 → 14, festivals 2 → 3. Verbleibende Jahres-Kandidaten pending: vrairepaire, libertycon, marchedescepages, danses-darc.
 - 2026-05-28: Filter-Presets. Gespeicherte Filter-Kombinationen mit Server-Storage (`data/filter_presets.json`), Endpoints `GET /api/filter-presets`, `PUT /api/filter-presets/<name>` (Upsert), `DELETE /api/filter-presets/<name>`. UI: dezente Chip-Reihe (`#preset-bar` über der Filterleiste), jede Pill = ein Preset, Klick aktiviert alle Filter + Toggles (Favoriten/Ignorierte) auf einen Schlag, `✕` löscht (mit `confirm`). Aktiver Preset wird invertiert (schwarz/cremig) hervorgehoben — Signatur-Match über sortierte Filter+Toggle-Werte. «+ Aktuelle Filter speichern…»-Button rechts (nur wenn aktive Filter vorhanden), Name via `prompt`, Max 50 Zeichen. Bei null Presets und null aktiven Filtern ist die Reihe komplett unsichtbar. Sortierung bleibt orthogonal (nicht im Preset gespeichert). Stichprobe gegen die Endpoints (Upsert, Update mit gleichem Namen, Validation, Delete, 404 auf Missing) bestätigt.
 - 2026-05-28: Jahres-Quellen-Unterstützung + sensualityfestival angebunden (`scrapers/sensualityfestival.py`, `scripts/inspect_sensualityfestival.py`). Neues `annual: true`-Flag in `sources.json` für Quellen mit ~1 Event/Jahr: `app.py:_annual_source_ids()` schliesst sie aus der Stale-/Health-Warnung aus und behandelt ein leeres Resultat (zwischen den Ausgaben) als ok statt als Diagnose-Problem (`stale: rejected > 0 or not is_annual`, Report-Feld `annual`). Erster Nutzer: sensualityfestival (Klasse 10, WordPress) — 1 Festival/Jahr, Termin nur als Fliesstext (`15-22 August, 2026`, dt./engl. Range-Parser mit Cross-Month-Reserve), kein konkreter Ort (nur Land CZ, Stadt None). ID `sensualityfestival-<jahr>`. Kategorie `konferenzen` → `festivals`. Kein Frontend-Change nötig (Diagnose-Filter `stale || rejected>0` greift weiterhin). Aktive Scraper 12 → 13, festivals 1 → 2. Weitere Jahres-Kandidaten pending: afuerafest, vrairepaire, libertycon, marchedescepages, danses-darc.
 - 2026-05-28: ICS-Export pro Event (Pendenz v1-Backlog OFF-1 erledigt). Neuer Endpoint `GET /api/event/<id>.ics` liefert RFC-5545-VCALENDAR mit einem VEVENT (`Content-Type: text/calendar; charset=utf-8`, `Content-Disposition: attachment` mit `<date>-<title-slug>.ics`-Dateiname). `ics.py` macht das Generieren: TEXT-Escaping für SUMMARY/DESCRIPTION/LOCATION (Backslash/Komma/Semikolon/Newline), 75-Octet-Line-Folding mit UTF-8-sicherem Split, DTSTART/DTEND als Floating-Local-Time mit Zeiten, sonst `VALUE=DATE` all-day mit exklusivem DTEND (letzter Tag + 1). DESCRIPTION kombiniert Event-Beschreibung + Quellen-Hinweis, LOCATION konkateniert Venue/Address/City, URL unangetastet. In der UI ein Lucide-Calendar-Plus-Icon (14px) als zweiter Glyph neben dem Titel, rechts vom `ⓘ`-Desc-Marker — dezent grau (#c4c4c0), Hover dunkel. `<a download>` triggert Direkt-Download; öffnet im Default-Kalender (Calendar.app, Outlook, GCal-Import via Datei). Stichprobe gegen Single-Day (DJ Robb 07:30–09:30) und Multi-Day (LarpCal Welcome 2024-12-09 bis 2024-12-31, all-day DTEND:20250101) bestätigt.
