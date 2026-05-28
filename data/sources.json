@@ -846,10 +846,10 @@
     "name": "LARP Calendar",
     "url": "https://larpcal.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "konferenzen",
+    "dashboardCategory": "festivals",
     "type": "scraper",
-    "status": "pending",
-    "notes": "Aggregiert LARP-Events weltweit"
+    "status": "active",
+    "notes": "2026-05-28: v2-Port aktiv (scrapers/larpcal.py) — Klasse 2 (öffentliche REST-API auf Render hinter React/Vite-SPA, Origin-Header nötig). International, native ID. Kategorie konferenzen → festivals korrigiert (LARP = Mehrtages-Events)."
   },
   {
     "id": "mission-ch",

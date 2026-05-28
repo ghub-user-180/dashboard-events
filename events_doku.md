@@ -13,7 +13,7 @@ Persönliches lokales Manager-View für aggregierte Anlässe (Bühne, Tanz, Kenn
 
 v1 (Next.js/Vercel) wurde am 25.5.2026 als unzuverlässig verworfen. v2 startet auf einer schlankeren Basis: Python-Scripts statt Next.js, Flask-Server statt Vercel, lokal statt online — Pfad nach oben offen (Scraper-Funktionen sind plattform-neutral, HTML kann später statisch deployen).
 
-Aktuell **11 aktive Scraper** über 5 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
+Aktuell **12 aktive Scraper** über 6 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
 
 ## Links
 
@@ -79,8 +79,9 @@ Events/
 | zegg | retreats-austausch | HTML schema.org-Microdata aus SeminarDesk-Plugin, URL-Hash ID |
 | kioskiosk | buehne-konzerte | Craft-CMS-GraphQL-API hinter SvelteKit-Frontend, slug-ID |
 | scich | retreats-austausch | HTML Divi-Inline (Custom), dt. Datums-Range, scoped auf CH-Camps |
+| larpcal | festivals | REST-API (Render) hinter React/Vite-SPA, Origin-Header, native ID, international |
 
-Sources.json-Status: **11 active · 46 pending · 8 manuell · 200 verworfen · 265 total**.
+Sources.json-Status: **12 active · 45 pending · 8 manuell · 200 verworfen · 265 total**.
 
 ## Aus Lastenheft übernommen
 
@@ -150,7 +151,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 - [ ] 2026-05-27: **Restliche v1-active Scraper portieren.** Pending: luma (kennenlernen API mit Key), roseway, planlos, latinpromotion, tanzevents, muevete, danceapp. Pro Quelle: inspect → Python-Port → sources.json flippen → verifizieren.
 - [ ] 2026-05-27: **Sport-Quellen aktivieren.** Aktuell 0 Sport-Quellen aktiv. v1-pending enthält sac-zug, sac-cas, foilingcamps — Triage notwendig welche tatsächlich sauber scrapebar sind.
-- [ ] 2026-05-27: **Festivals-Quellen aktivieren.** Aktuell 0 Festivals-Quellen aktiv. Kandidaten in v1-sources.json überprüfen.
+- [ ] 2026-05-27: **Festivals-Quellen aktivieren.** Seit 2026-05-28 erste aktive Quelle (larpcal, international). Weitere Kandidaten in v1-sources.json überprüfen.
 - [ ] 2026-05-27: **Forroaare reaktivieren.** 403 in v1 — Workaround finden (User-Agent variieren, andere Quelle).
 - [ ] 2026-05-27: **VBG-Venue-Map erweitern.** Aktuell nur «Casa Moscia» → Ascona und «Campo Rasa» → Onsernone. Weitere VBG-Häuser bei Auftreten ergänzen in `scrapers/vbg.py:VBG_VENUE_CITY`.
 - [ ] 2026-05-27: **Parallele Scraper-Ausführung.** Aktuell sequenziell — bei 8 Quellen noch ok, ab ~12+ lohnt `concurrent.futures.ThreadPoolExecutor`.
@@ -162,6 +163,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Historie
 
+- 2026-05-28: larpcal-Quelle angebunden (`scrapers/larpcal.py`, `scripts/inspect_larpcal.py`). Klasse 2 (öffentliche REST-API): larpcal.com ist eine React/Vite-SPA, Daten kommen aus `larpcal-tki9.onrender.com/events` (verlangt `Origin`-Header, CORS). 204 published Events international (Europa + Nordamerika), native `id`. API-Zeiten sind Platzhalter → `start_time`/`end_time` weggelassen; `city: "N/A"` → None; leere `eventUrl` → Detailseite `larpcal.com/events/<id>`; `UK` → `GB` (sonst keine Kontinent-Zuordnung). Kategorie bei Anbindung von `konferenzen` auf `festivals` korrigiert (LARP = Mehrtages-Events). Erste aktive Festivals-Quelle. Aktive Scraper 11 → 12, aktive Kategorien 5 → 6 (festivals 0 → 1).
 - 2026-05-28: SCI-Quelle angebunden (`scrapers/scich.py`, `scripts/inspect_scich.py`). Klasse 10 (Custom HTML): Schweizer Workcamps stehen inline in Divi-Textblöcken (`<h6>` Titel + `<p>` mit `Datum: … Ort: … Alter: …`), internationale Camps nutzen das Inline-Format nicht und liegen auf der externen `volunteer.sci.ngo`-DB — daher **scoped auf die 7 CH-Camps** (per Ort-Land CH gefiltert). Parser für dt. Datums-Range (`19. Juli bis 01. August 2026`, Startmonat optional, `\xa0`/Tippfehler toleriert) und Ort→Venue/Stadt-Trennung mit Kantons-/Land-Suffix-Drop. URL = Projekt-Link (`volunteer.sci.ngo/projects/NNNN`) bzw. Seiten-URL als Fallback. Source flipped pending → active. Aktive Scraper 10 → 11, retreats-austausch 3 → 4.
 - 2026-05-28: kiosk-Quelle angebunden (`scrapers/kioskiosk.py`, `scripts/inspect_kioskiosk.py`). Klasse 2 (öffentliche JSON/GraphQL-API): SvelteKit-Frontend mit leerem HTML, Events kommen aus Craft-CMS-GraphQL-API (`cms.kioskiosk.ch/api`, Bearer-Token im Client-Bundle). API-seitiger `eventDate >= heute`-Filter (kiosk-Events eintägig → deckungsgleich mit Server-Past-Filter). Keine Detailseiten im Frontend → `url` = externer Ticket-Link wenn vorhanden, sonst Startseite; native `slug` als ID statt URL-Hash. Aktive Scraper 9 → 10, buehne-konzerte 3 → 4.
 - 2026-05-28: ZEGG-Scraper portiert (`scrapers/zegg.py`, `scripts/inspect_zegg.py`). Parsed schema.org-Microdata aus `.sd-event[data-start-date]` mit `time[itemprop=startDate/endDate]`, `h4[itemprop=name]`, `[itemprop=addressLocality/addressCountry]`, optional `.sd-event-location [itemprop=name]` als Venue. Country-Default `DE` falls Microdata leer. URL-Hash-ID. Source flipped pending → active. Aktive Scraper 8 → 9, retreats-austausch 2 → 3.

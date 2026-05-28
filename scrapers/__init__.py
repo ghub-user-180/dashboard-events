@@ -6,6 +6,7 @@ from . import (
     jazzkantine,
     kioskiosk,
     kulturhof,
+    larpcal,
     schuur,
     scich,
     vbg,
@@ -24,4 +25,5 @@ SCRAPERS = [
     zegg,
     kioskiosk,
     scich,
+    larpcal,
 ]
