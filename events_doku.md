@@ -13,7 +13,7 @@ Persönliches lokales Manager-View für aggregierte Anlässe (Bühne, Tanz, Kenn
 
 v1 (Next.js/Vercel) wurde am 25.5.2026 als unzuverlässig verworfen. v2 startet auf einer schlankeren Basis: Python-Scripts statt Next.js, Flask-Server statt Vercel, lokal statt online — Pfad nach oben offen (Scraper-Funktionen sind plattform-neutral, HTML kann später statisch deployen).
 
-Aktuell **12 aktive Scraper** über 6 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
+Aktuell **13 aktive Scraper** über 6 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
 
 ## Links
 
@@ -80,8 +80,9 @@ Events/
 | kioskiosk | buehne-konzerte | Craft-CMS-GraphQL-API hinter SvelteKit-Frontend, slug-ID |
 | scich | retreats-austausch | HTML Divi-Inline (Custom), dt. Datums-Range, scoped auf CH-Camps |
 | larpcal | festivals | REST-API (Render) hinter React/Vite-SPA, Origin-Header, native ID, international |
+| sensualityfestival | festivals | HTML (Custom), Jahres-Quelle (`annual`), Datum aus Fliesstext, nur Land |
 
-Sources.json-Status: **12 active · 45 pending · 8 manuell · 200 verworfen · 265 total**.
+Sources.json-Status: **13 active · 44 pending · 8 manuell · 200 verworfen · 265 total**.
 
 ## Aus Lastenheft übernommen
 
@@ -124,6 +125,7 @@ Sources.json-Status: **12 active · 45 pending · 8 manuell · 200 verworfen · 
 - **Quelle als Filter-Pill** statt Footer-Toggle-Liste — skaliert für viele Quellen mit Such-Input im Dropdown.
 - **Diagnose-Block** im Footer zeigt nur noch Quellen mit Problemen (stale, verworfen). Bei allem ok: «Alle aktiven Quellen liefern sauber.» Übersicht-Counts (`X aktiv · Y pending · …`) bleiben.
 - **Source-Health-Warnung** als gelber Banner wenn eine Quelle > 7 Tage stumm.
+- **Jahres-Quellen** (`annual: true` in `sources.json`): Quellen mit ~1 Event/Jahr (z.B. einzelne Festivals). Leeres Resultat zwischen den Ausgaben gilt als normal — keine Stale-Warnung, kein Diagnose-Problem (solange nichts verworfen wird). Health-Check und Quellen-Report (`app.py:_annual_source_ids`) überspringen sie entsprechend.
 - **Inline-Kategorie-Badge** vor jedem Eventtitel (farbig, kurzer Label «Bühne», «Tanz», «Leute», «Sport», «Konferenz», «Festival», «Retreat»). Hover zeigt vollen Label.
 - **Datums-Filter** präzise Zeiträume: Heute, Morgen, Diese Woche, Nächste Woche, Nächste 7 Tage, Nächste 3 Monate, Dieses Jahr, Nächstes Jahr.
 - **Dauer-Klassifikation** mit Abend-Heuristik: Events ab 18:00 sind «kurz» unabhängig von Total-Dauer (Konzerte 20:00–02:00 sind keine «eintaegig»-Anlässe).
@@ -163,6 +165,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Historie
 
+- 2026-05-28: Jahres-Quellen-Unterstützung + sensualityfestival angebunden (`scrapers/sensualityfestival.py`, `scripts/inspect_sensualityfestival.py`). Neues `annual: true`-Flag in `sources.json` für Quellen mit ~1 Event/Jahr: `app.py:_annual_source_ids()` schliesst sie aus der Stale-/Health-Warnung aus und behandelt ein leeres Resultat (zwischen den Ausgaben) als ok statt als Diagnose-Problem (`stale: rejected > 0 or not is_annual`, Report-Feld `annual`). Erster Nutzer: sensualityfestival (Klasse 10, WordPress) — 1 Festival/Jahr, Termin nur als Fliesstext (`15-22 August, 2026`, dt./engl. Range-Parser mit Cross-Month-Reserve), kein konkreter Ort (nur Land CZ, Stadt None). ID `sensualityfestival-<jahr>`. Kategorie `konferenzen` → `festivals`. Kein Frontend-Change nötig (Diagnose-Filter `stale || rejected>0` greift weiterhin). Aktive Scraper 12 → 13, festivals 1 → 2. Weitere Jahres-Kandidaten pending: afuerafest, vrairepaire, libertycon, marchedescepages, danses-darc.
 - 2026-05-28: larpcal-Quelle angebunden (`scrapers/larpcal.py`, `scripts/inspect_larpcal.py`). Klasse 2 (öffentliche REST-API): larpcal.com ist eine React/Vite-SPA, Daten kommen aus `larpcal-tki9.onrender.com/events` (verlangt `Origin`-Header, CORS). 204 published Events international (Europa + Nordamerika), native `id`. API-Zeiten sind Platzhalter → `start_time`/`end_time` weggelassen; `city: "N/A"` → None; leere `eventUrl` → Detailseite `larpcal.com/events/<id>`; `UK` → `GB` (sonst keine Kontinent-Zuordnung). Kategorie bei Anbindung von `konferenzen` auf `festivals` korrigiert (LARP = Mehrtages-Events). Erste aktive Festivals-Quelle. Aktive Scraper 11 → 12, aktive Kategorien 5 → 6 (festivals 0 → 1).
 - 2026-05-28: SCI-Quelle angebunden (`scrapers/scich.py`, `scripts/inspect_scich.py`). Klasse 10 (Custom HTML): Schweizer Workcamps stehen inline in Divi-Textblöcken (`<h6>` Titel + `<p>` mit `Datum: … Ort: … Alter: …`), internationale Camps nutzen das Inline-Format nicht und liegen auf der externen `volunteer.sci.ngo`-DB — daher **scoped auf die 7 CH-Camps** (per Ort-Land CH gefiltert). Parser für dt. Datums-Range (`19. Juli bis 01. August 2026`, Startmonat optional, `\xa0`/Tippfehler toleriert) und Ort→Venue/Stadt-Trennung mit Kantons-/Land-Suffix-Drop. URL = Projekt-Link (`volunteer.sci.ngo/projects/NNNN`) bzw. Seiten-URL als Fallback. Source flipped pending → active. Aktive Scraper 10 → 11, retreats-austausch 3 → 4.
 - 2026-05-28: kiosk-Quelle angebunden (`scrapers/kioskiosk.py`, `scripts/inspect_kioskiosk.py`). Klasse 2 (öffentliche JSON/GraphQL-API): SvelteKit-Frontend mit leerem HTML, Events kommen aus Craft-CMS-GraphQL-API (`cms.kioskiosk.ch/api`, Bearer-Token im Client-Bundle). API-seitiger `eventDate >= heute`-Filter (kiosk-Events eintägig → deckungsgleich mit Server-Past-Filter). Keine Detailseiten im Frontend → `url` = externer Ticket-Link wenn vorhanden, sonst Startseite; native `slug` als ID statt URL-Hash. Aktive Scraper 9 → 10, buehne-konzerte 3 → 4.

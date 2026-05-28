@@ -884,10 +884,11 @@
     "name": "Festival of Sensuality – Czech Republic",
     "url": "https://www.sensualityfestival.com/",
     "bookmarkCategory": "Festivals-Retreats-Konferenzen",
-    "dashboardCategory": "konferenzen",
+    "dashboardCategory": "festivals",
     "type": "scraper",
-    "status": "pending",
-    "notes": "2026-05-24: Scraper entfernt — Webseite liefert nur Datum, keinen konkreten Stadtnamen. Manuell eintragen sobald der Veranstaltungsort der jeweiligen Ausgabe bekannt ist."
+    "status": "active",
+    "notes": "2026-05-28: v2-Port aktiv (scrapers/sensualityfestival.py) — Klasse 10 (Custom HTML, WordPress). Jahres-Quelle (annual=true): 1 Festival/Jahr, Termin nur als Fliesstext, kein konkreter Ort (nur Land CZ). Kategorie konferenzen → festivals.",
+    "annual": true
   },
   {
     "id": "naturallifestyles",

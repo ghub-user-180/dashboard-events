@@ -9,6 +9,7 @@ from . import (
     larpcal,
     schuur,
     scich,
+    sensualityfestival,
     vbg,
     zegg,
 )
@@ -26,4 +27,5 @@ SCRAPERS = [
     kioskiosk,
     scich,
     larpcal,
+    sensualityfestival,
 ]

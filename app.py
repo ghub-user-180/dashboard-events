@@ -132,10 +132,25 @@ def _write_states(states: dict[str, str]) -> None:
     )
 
 
+def _annual_source_ids() -> set[str]:
+    """IDs von Quellen mit ~1 Event/Jahr (sources.json: `annual: true`).
+
+    Für sie ist ein leeres Resultat zwischen den Ausgaben normal — keine
+    Stale-Warnung, kein Diagnose-Problem (solange nichts verworfen wird).
+    """
+    if not SOURCES_FILE.exists():
+        return set()
+    sources = json.loads(SOURCES_FILE.read_text(encoding="utf-8"))
+    return {s["id"] for s in sources if isinstance(s, dict) and s.get("annual") and s.get("id")}
+
+
 def _health_warnings(sources: list[dict[str, Any]]) -> list[dict[str, Any]]:
     now = datetime.now(timezone.utc)
+    annual_ids = _annual_source_ids()
     warnings: list[dict[str, Any]] = []
     for src in sources:
+        if src.get("id") in annual_ids:
+            continue
         last_str = src.get("last_success")
         if not isinstance(last_str, str) or not last_str:
             continue
@@ -193,6 +208,7 @@ def _run_all_scrapers() -> dict[str, Any]:
     all_events: list[dict[str, Any]] = []
     source_reports: list[dict[str, Any]] = []
     now = _now_iso()
+    annual_ids = _annual_source_ids()
 
     for module in scrapers.SCRAPERS:
         source_id = getattr(module, "SOURCE_ID", module.__name__)
@@ -209,6 +225,7 @@ def _run_all_scrapers() -> dict[str, Any]:
                 "category": category,
                 "ok": False,
                 "stale": True,
+                "annual": source_id in annual_ids,
                 "count": len(kept),
                 "rejected": 0,
                 "rejection_samples": [],
@@ -236,17 +253,21 @@ def _run_all_scrapers() -> dict[str, Any]:
         if not valid_events:
             kept = prev_events_by_source.get(source_id, [])
             all_events.extend(kept)
+            is_annual = source_id in annual_ids
             source_reports.append({
                 "id": source_id,
                 "category": category,
                 "ok": rejected == 0,
-                "stale": True,
+                # Jahres-Quelle ohne Verwürfe: leer ist erwartet → nicht als stale flaggen.
+                "stale": rejected > 0 or not is_annual,
+                "annual": is_annual,
                 "count": len(kept),
                 "rejected": rejected,
                 "rejection_samples": rejection_samples,
                 "last_success": prev_source.get("last_success"),
                 "error": (f"Alle {rejected} Events ungültig — letzten Stand behalten" if rejected else
-                          ("Leeres Resultat — letzten Stand behalten" if kept else "Leeres Resultat")),
+                          ("Jahres-Quelle: aktuell kein Event gelistet" if is_annual else
+                           ("Leeres Resultat — letzten Stand behalten" if kept else "Leeres Resultat"))),
             })
             continue
 
@@ -256,6 +277,7 @@ def _run_all_scrapers() -> dict[str, Any]:
             "category": category,
             "ok": True,
             "stale": False,
+            "annual": source_id in annual_ids,
             "count": len(valid_events),
             "rejected": rejected,
             "rejection_samples": rejection_samples,
