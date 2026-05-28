@@ -13,7 +13,7 @@ Persönliches lokales Manager-View für aggregierte Anlässe (Bühne, Tanz, Kenn
 
 v1 (Next.js/Vercel) wurde am 25.5.2026 als unzuverlässig verworfen. v2 startet auf einer schlankeren Basis: Python-Scripts statt Next.js, Flask-Server statt Vercel, lokal statt online — Pfad nach oben offen (Scraper-Funktionen sind plattform-neutral, HTML kann später statisch deployen).
 
-Aktuell **8 aktive Scraper** über 5 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
+Aktuell **10 aktive Scraper** über 5 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
 
 ## Links
 
@@ -64,7 +64,7 @@ Events/
 
 7 statt 8 wie in v1 — `tanz` zu `tanz-bewegung` erweitert (deckt jetzt auch Yoga/Körperarbeit), `singles-dating` + `begegnungen` zu `kennenlernen` zusammengeführt.
 
-## Aktive Scraper (Stand 2026-05-27)
+## Aktive Scraper (Stand 2026-05-28)
 
 | ID | Kategorie | Mechanismus |
 |---|---|---|
@@ -76,8 +76,10 @@ Events/
 | bitvocation | konferenzen | JSON-LD in HTML, international |
 | barhopping | kennenlernen | schema.org Microdata |
 | campfi | retreats-austausch | Tribe Events REST-API, US |
+| zegg | retreats-austausch | HTML schema.org-Microdata aus SeminarDesk-Plugin, URL-Hash ID |
+| kioskiosk | buehne-konzerte | Craft-CMS-GraphQL-API hinter SvelteKit-Frontend, slug-ID |
 
-Sources.json-Status nach Migration: **8 active · 49 pending · 8 manuell · 200 verworfen · 265 total**.
+Sources.json-Status: **10 active · 47 pending · 8 manuell · 200 verworfen · 265 total**.
 
 ## Aus Lastenheft übernommen
 
@@ -145,7 +147,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Offene Pendenzen
 
-- [ ] 2026-05-27: **Restliche v1-active Scraper portieren.** Pending: zegg (DE Retreat schema.org), luma (kennenlernen API mit Key), roseway, planlos, latinpromotion, tanzevents, muevete, danceapp. Pro Quelle: inspect → Python-Port → sources.json flippen → verifizieren.
+- [ ] 2026-05-27: **Restliche v1-active Scraper portieren.** Pending: luma (kennenlernen API mit Key), roseway, planlos, latinpromotion, tanzevents, muevete, danceapp. Pro Quelle: inspect → Python-Port → sources.json flippen → verifizieren.
 - [ ] 2026-05-27: **Sport-Quellen aktivieren.** Aktuell 0 Sport-Quellen aktiv. v1-pending enthält sac-zug, sac-cas, foilingcamps — Triage notwendig welche tatsächlich sauber scrapebar sind.
 - [ ] 2026-05-27: **Festivals-Quellen aktivieren.** Aktuell 0 Festivals-Quellen aktiv. Kandidaten in v1-sources.json überprüfen.
 - [ ] 2026-05-27: **Forroaare reaktivieren.** 403 in v1 — Workaround finden (User-Agent variieren, andere Quelle).
@@ -159,6 +161,8 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Historie
 
+- 2026-05-28: kiosk-Quelle angebunden (`scrapers/kioskiosk.py`, `scripts/inspect_kioskiosk.py`). Klasse 2 (öffentliche JSON/GraphQL-API): SvelteKit-Frontend mit leerem HTML, Events kommen aus Craft-CMS-GraphQL-API (`cms.kioskiosk.ch/api`, Bearer-Token im Client-Bundle). API-seitiger `eventDate >= heute`-Filter (kiosk-Events eintägig → deckungsgleich mit Server-Past-Filter). Keine Detailseiten im Frontend → `url` = externer Ticket-Link wenn vorhanden, sonst Startseite; native `slug` als ID statt URL-Hash. Aktive Scraper 9 → 10, buehne-konzerte 3 → 4.
+- 2026-05-28: ZEGG-Scraper portiert (`scrapers/zegg.py`, `scripts/inspect_zegg.py`). Parsed schema.org-Microdata aus `.sd-event[data-start-date]` mit `time[itemprop=startDate/endDate]`, `h4[itemprop=name]`, `[itemprop=addressLocality/addressCountry]`, optional `.sd-event-location [itemprop=name]` als Venue. Country-Default `DE` falls Microdata leer. URL-Hash-ID. Source flipped pending → active. Aktive Scraper 8 → 9, retreats-austausch 2 → 3.
 - 2026-05-27 (UI-Schliff nach v2-Push): Inline-Kategorie-Badge vor jedem Titel (farbiges Pill mit Kurz-Label). «Nur Favoriten» / «Ignorierte» aus den Header-Checkboxen in Toggle-Pills neben den Filter-Pills überführt. Quellen-Toggle-Liste im Footer aufgelöst und als 7. Filter-Pill «Quelle» mit Such-Input integriert; Diagnose-Block unten schrumpft auf «nur Probleme»-Anzeige. v1 GitHub-Repo aufgeräumt: alter CI-Commit per force-push ersetzt (e8e86dc → e420603), v1-`package-lock.json` aus dem Archiv entfernt um Dependabot-Lärm zu stoppen.
 - 2026-05-27: v2-Neuaufbau gestartet. v1-Code in `_archiv/v1-vercel/` verschoben, Lastenheft als `lastenheft.md` aus Git extrahiert. Neuer Stack: Python 3 + Flask + statisches HTML/JS, lokal auf `127.0.0.1:5050`. 8 Scraper portiert (schuur, jazzkantine, kulturhof, vbg, ecstaticdancebern, bitvocation, barhopping, campfi) über 5 Kategorien (buehne-konzerte 3×, tanz-bewegung 1×, kennenlernen 1×, konferenzen 1×, retreats-austausch 2×). 7-Kategorien-Schema (`tanz-bewegung`, `kennenlernen` als Merges aus v1-8er-Schema). Filter-UI mit Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) inkl. Multi-Select, dynamischer Counts, «nur»-Shortcut, Reset-Button. Per-Event-«Interessiert»/«Ignoriert»-Markierung mit Server-Storage. Stale-Schutz + Schema-Validation + Source-Health greifen ab Start. Dauer-Klassifikation mit Abend-Heuristik (Start ≥ 18:00 → kurz, unabhängig von Total-Dauer). Datums-Filter mit präzisen Range-Berechnungen, lokale (nicht UTC) Datums-Strings. Land-Spalte zeigt deutschen Ländernamen statt ISO-Code. v1-Doku-Inhalt durch v2-Doku ersetzt; Verwerfungs-Blockquote entfernt.
 

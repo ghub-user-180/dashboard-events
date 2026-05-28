@@ -4,9 +4,11 @@ from . import (
     campfi,
     ecstaticdancebern,
     jazzkantine,
+    kioskiosk,
     kulturhof,
     schuur,
     vbg,
+    zegg,
 )
 
 SCRAPERS = [
@@ -18,4 +20,6 @@ SCRAPERS = [
     bitvocation,
     barhopping,
     campfi,
+    zegg,
+    kioskiosk,
 ]
