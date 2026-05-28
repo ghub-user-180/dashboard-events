@@ -279,13 +279,13 @@
   },
   {
     "id": "scich",
-    "name": "SCI – 1000 Workcamps in 90 Ländern",
-    "url": "https://scich.org/",
+    "name": "SCI – Freiwilligencamps Schweiz",
+    "url": "https://scich.org/aktuelle-freiwilligeneinsaetze/",
     "bookmarkCategory": "Austausch-Volunteering",
     "dashboardCategory": "retreats-austausch",
     "type": "scraper",
-    "status": "pending",
-    "notes": "Camps auf externer DB (volunteer.sci.ngo) — nicht direkt scrapbar"
+    "status": "active",
+    "notes": "2026-05-28: v2-Port aktiv (scrapers/scich.py) — Klasse 10 (Custom HTML, Divi-Inline). Scoped auf die ~7 Schweizer Workcamps; internationale Camps (volunteer.sci.ngo-DB) bewusst ausgelassen."
   },
   {
     "id": "sosense",

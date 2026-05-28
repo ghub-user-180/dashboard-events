@@ -13,7 +13,7 @@ Persönliches lokales Manager-View für aggregierte Anlässe (Bühne, Tanz, Kenn
 
 v1 (Next.js/Vercel) wurde am 25.5.2026 als unzuverlässig verworfen. v2 startet auf einer schlankeren Basis: Python-Scripts statt Next.js, Flask-Server statt Vercel, lokal statt online — Pfad nach oben offen (Scraper-Funktionen sind plattform-neutral, HTML kann später statisch deployen).
 
-Aktuell **10 aktive Scraper** über 5 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
+Aktuell **11 aktive Scraper** über 5 von 7 Kategorien. Web-UI mit 6 Filter-Pills (Datum, Kategorie, Dauer, Stadt, Land, Kontinent) als Multi-Select mit dynamischen Counts, sortierbaren Spalten, Quellen-Toggles und «Interessiert»-Markierung pro Event. Schema-Validation verhindert Müll-Output, Stale-Schutz behält letzten erfolgreichen Stand bei Scraper-Ausfall, Source-Health-Warnung wenn eine Quelle > 7 Tage stumm bleibt.
 
 ## Links
 
@@ -78,8 +78,9 @@ Events/
 | campfi | retreats-austausch | Tribe Events REST-API, US |
 | zegg | retreats-austausch | HTML schema.org-Microdata aus SeminarDesk-Plugin, URL-Hash ID |
 | kioskiosk | buehne-konzerte | Craft-CMS-GraphQL-API hinter SvelteKit-Frontend, slug-ID |
+| scich | retreats-austausch | HTML Divi-Inline (Custom), dt. Datums-Range, scoped auf CH-Camps |
 
-Sources.json-Status: **10 active · 47 pending · 8 manuell · 200 verworfen · 265 total**.
+Sources.json-Status: **11 active · 46 pending · 8 manuell · 200 verworfen · 265 total**.
 
 ## Aus Lastenheft übernommen
 
@@ -161,6 +162,7 @@ Bei kaputten Quellen: zurück auf `pending`, später nochmal angehen.
 
 ## Historie
 
+- 2026-05-28: SCI-Quelle angebunden (`scrapers/scich.py`, `scripts/inspect_scich.py`). Klasse 10 (Custom HTML): Schweizer Workcamps stehen inline in Divi-Textblöcken (`<h6>` Titel + `<p>` mit `Datum: … Ort: … Alter: …`), internationale Camps nutzen das Inline-Format nicht und liegen auf der externen `volunteer.sci.ngo`-DB — daher **scoped auf die 7 CH-Camps** (per Ort-Land CH gefiltert). Parser für dt. Datums-Range (`19. Juli bis 01. August 2026`, Startmonat optional, `\xa0`/Tippfehler toleriert) und Ort→Venue/Stadt-Trennung mit Kantons-/Land-Suffix-Drop. URL = Projekt-Link (`volunteer.sci.ngo/projects/NNNN`) bzw. Seiten-URL als Fallback. Source flipped pending → active. Aktive Scraper 10 → 11, retreats-austausch 3 → 4.
 - 2026-05-28: kiosk-Quelle angebunden (`scrapers/kioskiosk.py`, `scripts/inspect_kioskiosk.py`). Klasse 2 (öffentliche JSON/GraphQL-API): SvelteKit-Frontend mit leerem HTML, Events kommen aus Craft-CMS-GraphQL-API (`cms.kioskiosk.ch/api`, Bearer-Token im Client-Bundle). API-seitiger `eventDate >= heute`-Filter (kiosk-Events eintägig → deckungsgleich mit Server-Past-Filter). Keine Detailseiten im Frontend → `url` = externer Ticket-Link wenn vorhanden, sonst Startseite; native `slug` als ID statt URL-Hash. Aktive Scraper 9 → 10, buehne-konzerte 3 → 4.
 - 2026-05-28: ZEGG-Scraper portiert (`scrapers/zegg.py`, `scripts/inspect_zegg.py`). Parsed schema.org-Microdata aus `.sd-event[data-start-date]` mit `time[itemprop=startDate/endDate]`, `h4[itemprop=name]`, `[itemprop=addressLocality/addressCountry]`, optional `.sd-event-location [itemprop=name]` als Venue. Country-Default `DE` falls Microdata leer. URL-Hash-ID. Source flipped pending → active. Aktive Scraper 8 → 9, retreats-austausch 2 → 3.
 - 2026-05-27 (UI-Schliff nach v2-Push): Inline-Kategorie-Badge vor jedem Titel (farbiges Pill mit Kurz-Label). «Nur Favoriten» / «Ignorierte» aus den Header-Checkboxen in Toggle-Pills neben den Filter-Pills überführt. Quellen-Toggle-Liste im Footer aufgelöst und als 7. Filter-Pill «Quelle» mit Such-Input integriert; Diagnose-Block unten schrumpft auf «nur Probleme»-Anzeige. v1 GitHub-Repo aufgeräumt: alter CI-Commit per force-push ersetzt (e8e86dc → e420603), v1-`package-lock.json` aus dem Archiv entfernt um Dependabot-Lärm zu stoppen.

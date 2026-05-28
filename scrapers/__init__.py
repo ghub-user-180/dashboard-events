@@ -7,6 +7,7 @@ from . import (
     kioskiosk,
     kulturhof,
     schuur,
+    scich,
     vbg,
     zegg,
 )
@@ -22,4 +23,5 @@ SCRAPERS = [
     campfi,
     zegg,
     kioskiosk,
+    scich,
 ]
