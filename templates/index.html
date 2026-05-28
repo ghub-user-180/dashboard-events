@@ -8,40 +8,41 @@
 </head>
 <body>
   <header>
-    <h1>Events</h1>
-    <div class="meta">
-      <label class="show-ignored"><input type="checkbox" id="show-favorites"> Nur Favoriten</label>
-      <label class="show-ignored"><input type="checkbox" id="show-ignored"> Ignorierte anzeigen</label>
+    <div class="title-block">
+      <div class="title-row">
+        <h1>Events</h1>
+        <button id="refresh" type="button" title="Aktualisieren" aria-label="Aktualisieren">
+          <svg class="refresh-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </div>
       <span id="status">Lade …</span>
-      <button id="to-bottom" type="button" class="nav-jump" title="ans Seitenende springen">↓ Nach unten</button>
-      <button id="refresh" type="button">Aktualisieren</button>
     </div>
   </header>
   <main>
+    <button id="to-bottom" type="button" class="nav-jump" title="ans Seitenende springen">↓ Nach unten</button>
     <div id="health-banner" class="health-banner" hidden></div>
     <div id="filter-bar" class="filter-bar"></div>
     <table id="events-table">
       <thead>
         <tr>
-          <th data-col="start_date">Datum</th>
-          <th data-col="title">Titel</th>
-          <th data-col="description">Beschreibung</th>
-          <th data-col="venue">Lokalität</th>
-          <th data-col="city">Ort</th>
-          <th data-col="country_label">Land</th>
-          <th data-col="state" class="state-col">★</th>
+          <th data-col="start_date" class="col-date">Datum</th>
+          <th data-col="title" class="col-title">Titel</th>
+          <th data-col="category" class="col-category">Kategorie</th>
+          <th data-col="venue" class="col-venue">Lokalität</th>
+          <th data-col="city" class="col-city">Ort</th>
+          <th data-col="country_label" class="col-country">Land</th>
+          <th data-col="state" class="state-col col-state">★</th>
         </tr>
       </thead>
       <tbody id="events-body"></tbody>
     </table>
     <p id="empty" hidden>Noch keine Events. Klicke «Aktualisieren».</p>
     <section id="sources" class="sources" hidden>
-      <h2>Quellen</h2>
+      <h2>Quellen-Status</h2>
       <p id="sources-overview" class="sources-overview"></p>
-      <div class="source-controls">
-        <button type="button" class="src-control" data-action="all">Alle</button>
-        <button type="button" class="src-control" data-action="none">Keine</button>
-      </div>
       <ul id="sources-list"></ul>
     </section>
     <button id="to-top" type="button" class="to-top">↑ Nach oben</button>
